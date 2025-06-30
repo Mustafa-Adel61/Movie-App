@@ -1,136 +1,82 @@
-<nav class="bg-gray-800 rounded-xl opacity-90">
+<nav [ngClass]="{
+  'opacity-100 pointer-events-auto': isNavbarVisible,
+  'opacity-0 pointer-events-none': !isNavbarVisible
+}" class="fixed top-0 start-0 min-w-full bg-transparent text-white z-50 transition-opacity duration-500">
+
   <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
     <div class="relative flex h-16 items-center justify-between">
+      <!-- Mobile menu button -->
       <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
-        <!-- Mobile menu button-->
         <button type="button"
-          class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:ring-2 focus:ring-white focus:outline-hidden focus:ring-inset"
-          aria-controls="mobile-menu" aria-expanded="false">
-          <span (click)="OpenMainMenu()" class="absolute -inset-0.5"></span>
-          <span class="sr-only">Open main menu</span>
-          <!--
-            Icon when menu is closed.
-
-            Menu open: "hidden", Menu closed: "block"
-          -->
-          <svg class="block size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-            aria-hidden="true" data-slot="icon">
+          class="p-2 text-gray-300 hover:bg-[#201640] hover:text-white rounded-md focus:outline-none"
+          (click)="OpenMainMenu()">
+          <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-          </svg>
-          <!--
-            Icon when menu is open.
-
-            Menu open: "block", Menu closed: "hidden"
-          -->
-          <svg class="hidden size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-            aria-hidden="true" data-slot="icon">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
           </svg>
         </button>
       </div>
-      <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-        <div class="flex shrink-0 items-center">
+
+      <!-- Logo and main links -->
+      <div class="flex flex-1 items-center justify-center sm:justify-start">
+        <div class="flex-shrink-0">
           <img class="h-8 w-auto" src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
-            alt="Your Company" />
+            alt="Logo">
         </div>
         <div class="hidden sm:ml-6 sm:block">
           <div class="flex space-x-4">
-            <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-            <a class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white" aria-current="page"
-              routerLink="/home">Home</a>
-            <a class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-              routerLink="/register">Register</a>
-            <a class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-              routerLink="/login">Login</a>
+            <a routerLink="/home"
+              class="px-3 py-2 rounded-md text-sm font-medium bg-[#030a1c] text-white hover:bg-[#050b1f]">Home</a>
+            <a routerLink="/register"
+              class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-[#050b1f] hover:text-white">Register</a>
+            <a routerLink="/login"
+              class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-[#050b1f] hover:text-white">Login</a>
 
-            <select (change)="changeLang($event)" class="bg-amber-50 border p-2 w-44 rounded">
-              <option selected disabled>Languages</option>
+            <!-- Language Select -->
+            <select (change)="changeLang($event)"
+              class="bg-[#201640] text-white border border-white px-3 py-2 text-sm rounded-md focus:ring focus:ring-blue-500">
+              <option disabled selected>Languages</option>
               <option value="en">English</option>
               <option value="fr">French</option>
               <option value="ar">Arabic</option>
               <option value="es">Spanish</option>
             </select>
-
-            <svg class="h-10 w-10 hover:fill-pink-500 cursor-pointer transition-all duration-300"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
-              <path
-                d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z" />
-            </svg>
           </div>
         </div>
       </div>
-      <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-        <button type="button"
-          class="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden">
-          <span class="absolute-inset-1.5 text-center"></span>
+
+      <!-- Profile -->
+      <div class="relative ml-3">
+        <button (click)="OpenUserAccount()" type="button"
+          class="flex rounded-full bg-[#201640] text-sm focus:outline-none focus:ring-2 focus:ring-white">
+          <img class="h-8 w-8 rounded-full"
+            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+            alt="User" />
         </button>
 
-        <!-- Profile dropdown -->
-        <div class="relative ml-3">
-          <div>
-            <button type="button" class="relative hover:cursor-pointer flex rounded-full bg-gray-800 text-sm 
-            focus:outline-hidden focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2
-             focus-visible:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true"
-              (click)="OpenUserAccount()">
-              <span class="absolute -inset-1.5"></span>
-              <span class="sr-only">Open user menu</span>
-              <img class="size-8 rounded-full"
-                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                alt="" />
-            </button>
-          </div>
-
-          <!--
-            Dropdown menu, show/hide based on menu state.
-
-            Entering: "transition ease-out duration-100"
-              From: "transform opacity-0 scale-95"
-              To: "transform opacity-100 scale-100"
-            Leaving: "transition ease-in duration-75"
-              From: "transform opacity-100 scale-100"
-              To: "transform opacity-0 scale-95"
-          -->
-          @if(isUserImageClicked){
-          <div
-            class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 focus:outline-hidden"
-            role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
-            <!-- Active: "bg-gray-100 outline-hidden", Not Active: "" -->
-            <a class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
-              id="user-menu-item-0" routerLink="/userAccount" (click)="isUserImageClicked = false">Your Profile</a>
-            <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
-              id="user-menu-item-1">Settings</a>
-            <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
-              id="user-menu-item-2">Sign out</a>
-          </div>
-          }
-
+        <!-- User Dropdown -->
+        @if (isUserImageClicked) {
+        <div class="absolute right-0 z-50 mt-2 w-48 rounded-md bg-[#201640] shadow-lg ring-1 ring-white/20 py-1">
+          <a routerLink="/userAccount" (click)="isUserImageClicked = false"
+            class="block px-4 py-2 text-sm text-white hover:bg-[#050b1f]">Your Profile</a>
+          <a href="#" class="block px-4 py-2 text-sm text-white hover:bg-[#050b1f]">Settings</a>
+          <button (click)="logout()"
+            class="w-full text-left px-4 py-2 text-sm text-white bg-transparent hover:bg-red-600 rounded-md">
+            Logout
+          </button>
         </div>
+        }
       </div>
     </div>
   </div>
 
-  <!-- Mobile menu, show/hide based on menu state. -->
-  @if(isMainMenuClicked){
+  <!-- Mobile menu -->
+  @if (isMainMenuClicked) {
   <div class="sm:hidden" id="mobile-menu">
-    <div class="space-y-1 px-2 pt-2 pb-3">
-      <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-      <a class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white" aria-current="page"
-        routerLink="/home">Home</a>
-      <a class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-        routerLink="/register">Register</a>
-      <a class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-        routerLink="/login">Login</a>
-
-      <a class="block rounded-md px-3 py-2 text-base font-medium" routerLink="/login"> <svg
-          class="h-7 w-7 fill-amber-50 hover:fill-pink-500 cursor-pointer transition-all duration-300"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
-          <path
-            d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z" />
-        </svg></a>
+    <div class="space-y-1 px-2 pt-2 pb-3 bg-[#201640]">
+      <a routerLink="/home" class="block px-3 py-2 text-base font-medium text-white hover:bg-[#050b1f]">Home</a>
+      <a routerLink="/register" class="block px-3 py-2 text-base font-medium text-white hover:bg-[#050b1f]">Register</a>
+      <a routerLink="/login" class="block px-3 py-2 text-base font-medium text-white hover:bg-[#050b1f]">Login</a>
     </div>
-
   </div>
   }
 </nav>
