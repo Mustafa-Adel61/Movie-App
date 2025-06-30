@@ -1,1 +1,43 @@
-<p>login works!</p>
+<main
+    class="h-screen bg-[linear-gradient(25deg,#201640_30%,#050b1f_60%,#030a1c_90%)] text-white px-4 md:px-20 flex flex-col md:flex-row items-center justify-center overflow-hidden">
+
+    <section class="flex w-full md:w-[90%] max-w-6xl items-center justify-between gap-6">
+
+        <div class="hidden md:block w-1/2 order-1">
+            <img src="/assets/images/Subtract.png" alt="Decoration" class="h-full max-h-[600px] object-contain" />
+        </div>
+
+        <div class="w-full max-w-md">
+            <form class="space-y-6" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <h2 class="font-bold text-4xl text-center">Welcome Back</h2>
+
+                <div class="flex items-center justify-between">
+                    <h2 class="font-bold text-2xl">Login</h2>
+                    <a [routerLink]="['/register']" class="underline text-sm hover:text-blue-400">Sign Up</a>
+                </div>
+
+                <div>
+                    <input type="email" placeholder="Email" formControlName="email"
+                        class="h-12 w-full rounded-md border border-white bg-transparent text-white placeholder:text-neutral-400 p-4" />
+                    <div *ngIf="submitted && loginForm.get('email')?.invalid" class="text-red-400 text-sm mt-1">Invalid
+                        email address</div>
+                </div>
+
+                <div>
+                    <input type="password" placeholder="Password" formControlName="password"
+                        class="h-12 w-full rounded-md border border-white bg-transparent text-white placeholder:text-neutral-400 p-4" />
+                    <div *ngIf="submitted && loginForm.get('password')?.invalid" class="text-red-400 text-sm">Password
+                        is required</div>
+                </div>
+
+                <div *ngIf="loginFailed" class="text-red-400 text-sm text-center">Email or password is incorrect</div>
+
+                <button type="submit"
+                    class="w-full rounded-md bg-[#228ee6] py-2 text-center text-sm text-white transition-all shadow-md hover:bg-sky-700 active:shadow-none disabled:opacity-50">
+                    Login
+                </button>
+            </form>
+        </div>
+
+    </section>
+</main>
