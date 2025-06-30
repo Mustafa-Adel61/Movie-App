@@ -14,17 +14,20 @@ export const routes: Routes = [
         canActivate: [authGuard]
     },
     {
-        path: 'navbar',
-        loadComponent: () => import('./Components/navbar/navbar').then(m => m.Navbar),
+        path: 'home',
+        loadComponent: () => import('./Components/navbar/navbar').then(m => m.Home),
         canActivate: [authRequiredGuard]
     },
     {
-        path: '',
-        redirectTo: 'navbar',
-        pathMatch: 'full'
+      path:"",
+      redirectTo:"home" , 
+      pathMatch:"full"
     },
     {
         path: '**',
         redirectTo: 'login'
     }
+
+
 ];
+

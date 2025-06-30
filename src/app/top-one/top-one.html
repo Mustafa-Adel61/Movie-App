@@ -1,0 +1,35 @@
+<div class="relative w-full h-[762px] bg-cover bg-center"
+  *ngIf="MovieFetcher.randomMovie() as Movie"
+  [style.background-image]="'url(https://image.tmdb.org/t/p/w500' + Movie.poster_path + ')'">
+
+
+  <div class="absolute inset-0 bg-black/70"></div>
+
+  <div class="absolute bottom-36 p-6 text-white z-10">
+    <h2 class="text-5xl font-bold">{{ Movie.original_title }}</h2>
+    <div class="w-3/4">
+      <p class="mt-2 text-3xl">{{ Movie.overview }}</p>
+    </div>
+    <div class="mt-2 flex items-center space-x-1 text-yellow-400 text-xl">
+
+      @for(star of [].constructor(fullStars); track $index){
+      <i class="fas fa-star text-2xl"></i>
+      }
+
+      @if(halfStar){
+      <i class="fas fa-star-half-alt text-2xl"></i>
+      }
+
+      @for(star of [].constructor(emptyStars); track $index){
+      <i class="far fa-star text-2xl"></i>
+      }
+      <p class="text-white text-3xl">{{fullStars}}/10</p>
+    </div>
+    <div class="mt-2">
+      <a class="inline-block rounded-3xl bg-[#228EE5] px-8 py-3 text-sm font-medium text-white transition hover:scale-110 hover:shadow-xl focus:ring-3 focus:outline-hidden"
+        href="#">
+        Movie Details
+      </a>
+    </div>
+  </div>
+</div>
