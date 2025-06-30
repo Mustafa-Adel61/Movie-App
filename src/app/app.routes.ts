@@ -18,6 +18,11 @@ export const routes: Routes = [
         loadComponent: () => import('./Components/navbar/navbar').then(m => m.Home),
         canActivate: [authRequiredGuard]
     },
+      {
+        path: 'userAccount',
+        loadComponent: () => import('./Components/navbar/navbar').then(m => m.UserAccount),
+        canActivate: [authRequiredGuard]
+    },
     {
       path:"",
       redirectTo:"home" , 
@@ -28,6 +33,6 @@ export const routes: Routes = [
         redirectTo: 'login'
     }
 
-
 ];
+
 
