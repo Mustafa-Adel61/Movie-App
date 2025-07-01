@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+
 
 import { Navbar } from './Components/navbar/navbar';
-import { MovieHead } from "./Components/movie-head/movie-head";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Navbar, MovieHead],
+  imports: [RouterOutlet, Navbar],
 
   templateUrl: './app.html',
   styleUrl: './app.css'

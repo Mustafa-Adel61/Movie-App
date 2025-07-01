@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { Iuser } from '../interfaces/iuser';
 import { Router } from '@angular/router';
 
@@ -8,8 +8,13 @@ import { Router } from '@angular/router';
 })
 export class LoginS {
   private localStorageKey = 'users';
+  isLogged = signal(false)
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) {
+    if(this.getCurrentUser() != null){
+      this.isLogged.set(true)
+    }
+   }
 
   getAllUsers(): Iuser[] {
     const usersJson = localStorage.getItem(this.localStorageKey);
@@ -38,6 +43,7 @@ export class LoginS {
 
   setCurrentUser(user: Iuser): void {
     localStorage.setItem('currentUser', JSON.stringify(user));
+    this.isLogged.set(true);
   }
 
   getCurrentUser(): Iuser | null {
@@ -48,5 +54,6 @@ export class LoginS {
   logout(): void {
     localStorage.removeItem('currentUser');
     this.router.navigate(['/login'], { replaceUrl: true });
+    this.isLogged.set(false);
   }
 }

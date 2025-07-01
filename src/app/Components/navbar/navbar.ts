@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 import { APIFetchingService } from '../../shared/apifetching-service';
 import { LoginS } from '../../services/login-s';
 import { CommonModule } from '@angular/common';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -17,7 +18,7 @@ export class Navbar {
   dropdownOpen = false;
 
   movieFetcher = inject(APIFetchingService)
-  constructor(private loginS: LoginS) { }
+  constructor(public loginS: LoginS) { }
 
   changeLang(e: Event) {
     const lang = (e.target as HTMLSelectElement).value
