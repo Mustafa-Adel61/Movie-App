@@ -10,7 +10,7 @@ export const authRequiredGuard: CanActivateFn = () => {
   const user = userService.getCurrentUser();
 
   if (!user) {
-    router.navigate(['/home'], { replaceUrl: true });
+    router.navigate(['/login'], { replaceUrl: true });
     return false;
   }
 

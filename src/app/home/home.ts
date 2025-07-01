@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TopOne } from '../top-one/top-one';
+import { TopOne } from '../Components/top-one/top-one';
 
 @Component({
   selector: 'app-home',

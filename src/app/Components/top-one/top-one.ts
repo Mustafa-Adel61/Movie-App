@@ -1,5 +1,5 @@
 import { Component, effect, inject, signal } from '@angular/core';
-import { APIFetchingService } from '../shared/apifetching-service';
+import { APIFetchingService } from '../../shared/apifetching-service';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -10,17 +10,17 @@ import { CommonModule } from '@angular/common';
 })
 export class TopOne {
   MovieFetcher = inject(APIFetchingService)
-  constructor(){
+  constructor() {
     effect(() => {
       const results = this.MovieFetcher.myHttpResource.value()?.results
-      if(results.length > 0){
+      if (results.length > 0) {
         const randomIndex = Math.round(Math.random() * results.length);
         this.MovieFetcher.randomMovie.set(results[randomIndex])
       }
     })
   }
 
-  get rating(): number{
+  get rating(): number {
     return this.MovieFetcher.randomMovie()?.vote_average ?? 0;
   }
   maxStars: number = 10;

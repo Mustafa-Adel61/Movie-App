@@ -15,12 +15,12 @@ export const routes: Routes = [
     },
     {
         path: 'home',
-        loadComponent: () => import('./Components/navbar/navbar').then(m => m.Home),
-        canActivate: [authRequiredGuard]
+        loadComponent: () => import('./Components/home/home').then(m => m.Home),
+
     },
       {
         path: 'userAccount',
-        loadComponent: () => import('./Components/navbar/navbar').then(m => m.UserAccount),
+        loadComponent: () => import('./Components/user-account/user-account').then(m => m.UserAccount),
         canActivate: [authRequiredGuard]
     },
     {
@@ -30,7 +30,7 @@ export const routes: Routes = [
     },
     {
         path: '**',
-        redirectTo: 'login'
+        redirectTo: 'home'
     }
 
 ];
