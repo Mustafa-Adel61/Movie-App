@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { TopOne } from '../Components/top-one/top-one';
 
 @Component({
   selector: 'app-home',
-  imports: [TopOne],
+  imports: [],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })

@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { DataFromAPI } from '../../data-from-api';
 import { CommonModule } from '@angular/common';
 import { IMovie } from '../../interfaces/imovie';
+import { MovieHead } from "../movie-head/movie-head";
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule],
+  imports: [CommonModule, MovieHead],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
