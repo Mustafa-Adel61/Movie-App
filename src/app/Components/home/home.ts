@@ -2,7 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { DataFromAPI } from '../../data-from-api';
 import { CommonModule } from '@angular/common';
 import { IMovie } from '../../interfaces/imovie';
+<<<<<<< HEAD
 import { MovieHead } from "../movie-head/movie-head";
+=======
+import { DarkModeServiceService } from '../../services/DarkModeService.service';
+>>>>>>> f5227552dd9a10659389eb307436c8ef2b8ca859
 
 @Component({
   selector: 'app-home',
@@ -13,22 +17,54 @@ import { MovieHead } from "../movie-head/movie-head";
 export class Home implements OnInit {
   imagePhath: string = 'https://image.tmdb.org/t/p/w500';
   movieData: IMovie[] = [];
+  currentPage: number = 1;
+  totalPages: number = 0;
+  isLoading: boolean = false;
 
-  constructor(private _DataFromAPI: DataFromAPI) { }
+  constructor(private _DataFromAPI: DataFromAPI,
+    public darkModeService: DarkModeServiceService) { }
 
   ngOnInit(): void {
-    this._DataFromAPI.getData().subscribe({
+    this.loadMovies();
+  }
+
+  loadMovies(page: number = 1): void {
+    this.isLoading = true;
+    this._DataFromAPI.getData(page).subscribe({
       next: (res) => {
         console.log(res.results);
-        this.movieData = res.results.map((movie: IMovie) => ({
+        const processedData = res.results.map((movie: IMovie) => ({
           ...movie,
           isFavorite: false
         }));
+        // this.totalPages = res.total_pages;
+        // this.currentPage = res.page;
+        // this.isLoading = false;
+        setTimeout(() => {
+          this.movieData = processedData;
+          this.totalPages = res.total_pages;
+          this.currentPage = res.page;
+          this.isLoading = false;
+        }, 1000);
       },
       error: (err) => {
-        console.error('Error fetching movies', err);
+        setTimeout(() => {
+          this.isLoading = false;
+          console.error('Error fetching movies', err);
+        }, 1000);
       }
     });
+  }
+
+  changePage(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.loadMovies(page);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
+
+  toggleDarkMode() {
+    this.darkModeService.toggleDarkMode();
   }
 
   toggleWishlist(movie: IMovie) {

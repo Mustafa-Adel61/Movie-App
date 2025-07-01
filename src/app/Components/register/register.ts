@@ -13,6 +13,7 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { LoginS } from '../../services/login-s';
+import { DarkModeServiceService } from '../../services/DarkModeService.service';
 @Component({
   selector: 'app-register',
   imports: [RouterModule, ReactiveFormsModule, CommonModule],
@@ -24,7 +25,8 @@ export class Register {
   submitted = false;
   errorMessage: string = '';
 
-  constructor(private fb: FormBuilder, private loginService: LoginS, private router: Router) {
+  constructor(private fb: FormBuilder, private loginService: LoginS, private router: Router,
+    public darkModeService: DarkModeServiceService) {
     this.registerForm = this.fb.group(
       {
         firstName: ['', [Validators.required, Validators.minLength(4)]],
@@ -64,5 +66,7 @@ export class Register {
     }
   }
 
-
+  toggleDarkMode() {
+    this.darkModeService.toggleDarkMode();
+  }
 }

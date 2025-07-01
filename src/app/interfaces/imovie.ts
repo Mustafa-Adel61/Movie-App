@@ -1,16 +1,20 @@
 import { IGener } from "./igener";
 
 export interface IMovie {
+    adult: boolean;
+    backdrop_path: string;
+    genre_ids: number[];
     id: number;
+    original_language: string;
     original_title: string;
     overview: string;
+    popularity: number;
     poster_path: string;
-    original_language: string;
     release_date: string;
+    title: string;
+    name: string;
+    video: boolean;
     vote_average: number;
-    runtime?: number;
-    genres?: IGener[];
-    homepage?: string;
-    imdb_id?: string;
+    vote_count: number;
     isFavorite?: boolean;
 }
