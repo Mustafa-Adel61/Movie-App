@@ -1,54 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
+<main class="py-32 max-w-7xl mx-auto">
+  <h1 class="text-3xl font-bold mb-6">Movies</h1>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Movie Grid</title>
-  <!-- <script src="https://cdn.tailwindcss.com"></script> -->
-  <script>
-    function toggleWishlist(btn) {
-      btn.classList.toggle("text-yellow-400");
-      btn.classList.toggle("text-gray-400");
-    }
+  <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+    @for (item of movieData; track $index) {
+    <div class="relative cursor-pointer group ">
+      <img [src]="imagePhath + item.poster_path" alt="Movie Poster"
+        class="w-full h-64 object-cover rounded-xl shadow-md hover:-translate-1.5 transition-all ease-in duration-200" />
 
-    function getRatingColor(rating) {
-      if (rating >= 80) return "bg-green-500";
-      if (rating >= 60) return "bg-yellow-400";
-      return "bg-red-500";
-    }
-  </script>
-</head>
-
-<body class="bg-[#f9f9f9] p-6">
-
-  <div class="max-w-7xl mx-auto">
-    <h1 class="text-3xl font-bold text-gray-800 mb-6">Movies</h1>
-
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-
-      <!-- Movie Card End -->
-      @for (item of movieData; track $index) {
-
-      <div class="relative group">
-        <img [src]="imagePhath+item.poster_path" alt="The Good Doctor"
-          class="w-full h-64 object-cover rounded-xl shadow-md" />
-        <!-- Movie Info -->
-        <div class="mt-2">
-          <h3 class="text-sm font-semibold text-gray-800">{{item.title}}+{{item.name}}</h3>
-          <div class="flex items-center justify-between text-xs text-gray-500">
-            <p>{{item.release_date}}</p>
-            <button onclick="toggleWishlist(this)" class="text-gray-400 hover:text-yellow-400 transition-all">
-              ❤️
-            </button>
-          </div>
+      <!-- Movie Info -->
+      <div class="mt-2">
+        <h3 class="text-sm font-semibold">{{ item.original_title || item.original_title }}</h3>
+        <div class="flex items-center justify-between text-xs text-gray-300">
+          <p>{{ item.release_date }}</p>
+          <button (click)="toggleWishlist(item)">
+            <i class="fa-heart" [ngClass]="{
+                          'fa-solid text-red-500': item.isFavorite,
+                          'fa-regular text-gray-400': !item.isFavorite
+                        }"></i>
+          </button>
         </div>
       </div>
-
-      }
     </div>
+    } @empty {
+    <div class="font-bold text-4xl grid content-center justify-items-center w-screen">No Movies here!</div>
+    }
   </div>
-
-</body>
-
-</html>
+</main>
