@@ -2,11 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { DataFromAPI } from '../../data-from-api';
 import { CommonModule } from '@angular/common';
 import { IMovie } from '../../interfaces/imovie';
-<<<<<<< HEAD
 import { MovieHead } from "../movie-head/movie-head";
-=======
 import { DarkModeServiceService } from '../../services/DarkModeService.service';
->>>>>>> f5227552dd9a10659389eb307436c8ef2b8ca859
 
 @Component({
   selector: 'app-home',

@@ -28,12 +28,15 @@
             <a routerLink="/home"
               class="px-3 py-2 rounded-md text-sm font-medium hover:bg-[#bbbbbe]  hover:text-[#050b1f]"
               [ngClass]="isDarkMode ? 'text-white' : 'text-black'">Home</a>
+            @if(!loginS.isLogged()){
             <a routerLink="/register"
               class="px-3 py-2 rounded-md text-sm font-medium hover:bg-[#bbbbbe]  hover:text-[#050b1f]"
               [ngClass]="isDarkMode ? 'text-white' : 'text-black'">Register</a>
             <a routerLink="/login"
               class="px-3 py-2 rounded-md text-sm font-medium hover:bg-[#bbbbbe]  hover:text-[#050b1f]"
               [ngClass]="isDarkMode ? 'text-white' : 'text-black'">Login</a>
+            }
+
 
 
           </div>
@@ -55,15 +58,16 @@
 
 
       <!-- Profile -->
-       
+      @if(loginS.isLogged()){
       <div class="relative ml-3">
+       
         <button (click)="OpenUserAccount()" type="button"
           class="flex rounded-full bg-[#201640] text-sm focus:outline-none focus:ring-2 focus:ring-white">
-          <img class="h-8 w-8 rounded-full"
-            src="../../../assets/images/avatar.avif"
-            alt="User" />
+          <img class="h-8 w-8 rounded-full" src="../../../assets/images/avatar.avif" alt="User" />
         </button>
-       
+
+
+
 
 
         <!-- User Dropdown -->
@@ -83,7 +87,9 @@
         </div>
         }
       </div>
-    
+      }
+
+
     </div>
   </div>
 
@@ -93,10 +99,13 @@
     <div class="space-y-1 px-2 pt-2 pb-3 bg-[#201640]">
       <a routerLink="/home"
         class="block px-3 py-2 text-base font-medium text-white dark:text-white hover:bg-[#050b1f]">Home</a>
+      @if(!loginS.isLogged()){
       <a routerLink="/register"
         class="block px-3 py-2 text-base font-medium text-white dark:text-white hover:bg-[#050b1f]">Register</a>
       <a routerLink="/login"
         class="block px-3 py-2 text-base font-medium text-white dark:text-white hover:bg-[#050b1f]">Login</a>
+      }
+
     </div>
   </div>
   }

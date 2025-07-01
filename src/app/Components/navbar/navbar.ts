@@ -27,7 +27,7 @@ export class Navbar implements OnInit, OnDestroy {
   movieFetcher = inject(APIFetchingService);
 
   constructor(
-    private loginS: LoginS,
+    public loginS: LoginS,
     public darkModeService: DarkModeServiceService
   ) { }
 
