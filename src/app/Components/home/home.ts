@@ -14,6 +14,7 @@ import { DarkModeServiceService } from '../../services/DarkModeService.service';
 export class Home implements OnInit {
   imagePhath: string = 'https://image.tmdb.org/t/p/w500';
   movieData: IMovie[] = [];
+   wishlist:IMovie[]=[];
   currentPage: number = 1;
   totalPages: number = 0;
   isLoading: boolean = false;
@@ -22,6 +23,12 @@ export class Home implements OnInit {
     public darkModeService: DarkModeServiceService) { }
 
   ngOnInit(): void {
+    
+    const saved = localStorage.getItem('wishlist');
+  if (saved) {
+    this.wishlist = JSON.parse(saved);
+  }
+
     this.loadMovies();
   }
 
@@ -32,6 +39,8 @@ export class Home implements OnInit {
         console.log(res.results);
         const processedData = res.results.map((movie: IMovie) => ({
           ...movie,
+         inWishlist: this.wishlist.some(m => m.id === movie.id),
+
           isFavorite: false
         }));
         // this.totalPages = res.total_pages;
@@ -65,7 +74,23 @@ export class Home implements OnInit {
   }
 
   toggleWishlist(movie: IMovie) {
-    movie.isFavorite = !movie.isFavorite;
+  movie.inWishlist = !movie.inWishlist;
+
+  if (movie.inWishlist) {
+    this.wishlist.push(movie);
+  } else {
+    this.wishlist = this.wishlist.filter(m => m.id !== movie.id);
   }
 
+  
+  localStorage.setItem('wishlist', JSON.stringify(this.wishlist));
 }
+}
+
+
+
+
+
+
+
+

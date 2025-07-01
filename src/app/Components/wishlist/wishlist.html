@@ -1,0 +1,77 @@
+
+
+<div class="min-h-screen bg-[#0b132b] text-white px-6 py-6">
+  <h2 class="text-2xl font-bold mt-4 mb-6">My Favourites ❤️</h2>
+
+  <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+    @for (item of wishlist; track item.id) {
+      <div class="relative cursor-pointer group" data-aos="zoom-out" data-aos-duration="500" data-aos-offset="150">
+        <img [src]="imagePhath + item.poster_path" alt="Movie Poster"
+          class="w-full h-64 object-cover rounded-xl shadow-md hover:-translate-1.5 transition-all ease-in duration-200" />
+
+        <!-- Movie Info -->
+        <div class="mt-2">
+          <h3 class="text-sm font-semibold">{{ item.original_title || item.title }}</h3>
+          <div class="flex items-center justify-between text-xs text-gray-300 dark:text-black">
+            <p [ngClass]="darkModeService.isDarkMode ? 'text-white' : 'text-black'">{{ item.release_date }}</p>
+            <button (click)="removeFromWishlist(item)">
+            <i class="fa-heart  cursor-pointer transition-all"
+               [class.fa-solid]="item.inWishlist"
+               [class.fa-regular]="!item.inWishlist"
+               [class.text-red-500]="item.inWishlist"
+               [class.text-gray-400]="!item.inWishlist"
+               [class.hover\:text-yellow-400]="!item.inWishlist"
+               >
+            </i>
+         
+            </button>
+          </div>
+        </div>
+      </div>
+    
+    }
+  </div>
+
+  @if (wishlist.length === 0) {
+    <p class="text-center mt-10 text-lg text-gray-300">
+      🚫 You haven't added any movies to your favourites yet. Start exploring!
+    </p>
+  }
+
+<div class="mt-20 relative">
+  <h2 class="text-2xl font-bold mb-4">Recommended for You 🎯</h2>
+
+  <button
+    (click)="scrollLeft()"
+    class="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/10 hover:bg-white/20 p-2 rounded-full"
+  >
+    <i class="fa-solid fa-chevron-left text-white"></i>
+  </button>
+
+  <button
+    (click)="scrollRight()"
+    class="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/10 hover:bg-white/20 p-2 rounded-full"
+  >
+    <i class="fa-solid fa-chevron-right text-white"></i>
+  </button>
+
+
+
+  
+  <div #scrollContainer class="overflow-x-auto whitespace-nowrap space-x-4 pb-4 scroll-smooth transition-all px-10 scrollbar-hide">
+    @for (movie of recommendedMovies; track movie.id) {
+      <div
+        class="inline-block w-52 bg-white/5 hover:bg-white/10 text-white rounded-xl p-3 mr-3 transition backdrop-blur-md hover:scale-105"
+      >
+        <img
+          [src]="imagePhath + movie.poster_path"
+          alt="recommended movie"
+          class="w-full h-64 object-cover rounded-lg mb-2"
+        />
+        <h4 class="text-md font-semibold truncate">{{ movie.title }}</h4>
+        <p class="text-xs text-gray-300">{{ movie.release_date }}</p>
+      </div>
+    }
+  </div>
+</div>
+

@@ -72,3 +72,4 @@ export class Navbar implements OnInit, OnDestroy {
     this.isNavbarVisible = scrollY < 100;
   }
 }
+
