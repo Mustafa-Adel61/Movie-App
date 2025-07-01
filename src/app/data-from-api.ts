@@ -12,4 +12,20 @@ export class DataFromAPI {
     return this._HttpClient.get("https://api.themoviedb.org/3/movie/now_playing?api_key=39c7b67b8f5b2832672239362e2395d4")
     // return this._HttpClient.get("https://api.themoviedb.org/3/genre/movie/list?api_key=39c7b67b8f5b2832672239362e2395d4")
   }
+
+  //////////////////////////////////////////////////
+
+  getRecommended(movieId: number): Observable<any> {
+    return this._HttpClient.get(
+      `https://api.themoviedb.org/3/movie/${movieId}/recommendations?api_key=39c7b67b8f5b2832672239362e2395d4`
+    );
+  }
+
+  getTrending(): Observable<any> {
+    return this._HttpClient.get(
+      'https://api.themoviedb.org/3/trending/movie/week?api_key=39c7b67b8f5b2832672239362e2395d4'
+    );
+  }
+
+
 }

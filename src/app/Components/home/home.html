@@ -1,12 +1,12 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Movie Grid</title>
+  <title>Movie Grid</title> -->
   <!-- <script src="https://cdn.tailwindcss.com"></script> -->
-  <script>
+  <!-- <script>
     function toggleWishlist(btn) {
       btn.classList.toggle("text-yellow-400");
       btn.classList.toggle("text-gray-400");
@@ -19,36 +19,72 @@
     }
   </script>
 </head>
+ 
 
-<body class="bg-[#f9f9f9] p-6">
+<body class="min-h-screen bg-[#0b132b] text-white">
 
   <div class="max-w-7xl mx-auto">
     <h1 class="text-3xl font-bold text-gray-800 mb-6">Movies</h1>
 
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
 
-      <!-- Movie Card End -->
-      @for (item of movieData; track $index) {
+       @for (item of movieData; track $index) {
 
       <div class="relative group">
         <img [src]="imagePhath+item.poster_path" alt="The Good Doctor"
           class="w-full h-64 object-cover rounded-xl shadow-md" />
-        <!-- Movie Info -->
         <div class="mt-2">
           <h3 class="text-sm font-semibold text-gray-800">{{item.title}}+{{item.name}}</h3>
           <div class="flex items-center justify-between text-xs text-gray-500">
             <p>{{item.release_date}}</p>
             <button onclick="toggleWishlist(this)" class="text-gray-400 hover:text-yellow-400 transition-all">
-              ❤️
+              <i class="fa-regular fa-heart fa-2x"></i>
+
             </button>
           </div>
         </div>
       </div>
 
-      }
+      } 
     </div>
   </div>
 
 </body>
 
-</html>
+</html> -->
+
+
+
+<div class="min-h-screen bg-[#0b132b] text-white px-6 py-6">
+
+  <h1 class="text-3xl font-bold text-white mb-6">Movies</h1>
+
+  <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+    @for (item of movieData; track item.id) {
+      <div class="bg-white/5 hover:bg-white/10 text-white rounded-2xl p-4 transition duration-300 ease-in-out backdrop-blur-lg shadow-none hover:shadow-lg hover:scale-105">
+        <img [src]="imagePhath + item.poster_path"
+             alt="movie"
+             class="w-full h-64 object-cover" />
+
+        <div class="p-3">
+          <h3 class="text-md font-bold mb-1">
+            {{ item.title || item.name }}
+          </h3>
+
+          <div class="flex justify-between items-center text-sm text-gray-600">
+            <span>{{ item.release_date }}</span>
+
+            <i class="fa-heart fa-2x cursor-pointer transition-all"
+               [class.fa-solid]="item.inWishlist"
+               [class.fa-regular]="!item.inWishlist"
+               [class.text-red-500]="item.inWishlist"
+               [class.text-gray-400]="!item.inWishlist"
+               [class.hover\:text-yellow-400]="!item.inWishlist"
+               (click)="toggleWishlist(item)">
+            </i>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>
