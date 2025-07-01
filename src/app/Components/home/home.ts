@@ -13,7 +13,7 @@ import { DarkModeServiceService } from '../../services/DarkModeService.service';
 export class Home implements OnInit {
   imagePhath: string = 'https://image.tmdb.org/t/p/w500';
   movieData: IMovie[] = [];
-   wishlist:Imovie[]=[];
+   wishlist:IMovie[]=[];
   currentPage: number = 1;
   totalPages: number = 0;
   isLoading: boolean = false;
@@ -72,7 +72,7 @@ export class Home implements OnInit {
     this.darkModeService.toggleDarkMode();
   }
 
-  toggleWishlist(movie: Imovie) {
+  toggleWishlist(movie: IMovie) {
   movie.inWishlist = !movie.inWishlist;
 
   if (movie.inWishlist) {

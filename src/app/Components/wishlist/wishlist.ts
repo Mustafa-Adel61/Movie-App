@@ -28,19 +28,24 @@
 
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DataFromAPI } from '../../data-from-api';
+import { DarkModeServiceService } from '../../services/DarkModeService.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-wishlist',
   templateUrl: './wishlist.html',
-  styleUrl: './wishlist.css'
+  styleUrl: './wishlist.css',
+    imports: [CommonModule],
+  
 })
 export class Wishlist implements OnInit {
+
   wishlist: any[] = [];
   recommendedMovies: any[] = [];
   imagePhath: string = 'https://image.tmdb.org/t/p/w500';
   //  @viewChild('scrollContainer', { static: false }) scrollContainer!: ElementRe
   @ViewChild('scrollContainer') scrollContainer!: ElementRef;
-  constructor(private _DataFromAPI: DataFromAPI) {}
+  constructor(private _DataFromAPI: DataFromAPI,public darkModeService:DarkModeServiceService) {}
 
   ngOnInit(): void {
     // ⬇️ تحميل المفضلة من localStorage
