@@ -25,31 +25,27 @@
           <div class="flex items-center justify-between text-xs text-gray-300 dark:text-black">
             <p [ngClass]="darkModeService.isDarkMode ? 'text-white' : 'text-black'">{{ item.release_date }}</p>
             <button (click)="toggleWishlist(item)">
-            <i class="fa-heart  cursor-pointer transition-all"
-               [class.fa-solid]="item.inWishlist"
-               [class.fa-regular]="!item.inWishlist"
-               [class.text-red-500]="item.inWishlist"
-               [class.text-gray-400]="!item.inWishlist"
-               [class.hover\:text-yellow-400]="!item.inWishlist"
-               >
-            </i>
-         
+              <i class="fa-heart  cursor-pointer transition-all" [class.fa-solid]="item.inWishlist"
+                [class.fa-regular]="!item.inWishlist" [class.text-red-500]="item.inWishlist"
+                [class.text-gray-400]="!item.inWishlist" [class.hover\:text-yellow-400]="!item.inWishlist">
+              </i>
+
             </button>
           </div>
         </div>
       </div>
-      </div>
-      } @empty {
-      <div class="font-bold text-4xl grid content-center justify-items-center w-screen">No Movies here!</div>
-      }
     </div>
+    } @empty {
+    <div class="font-bold text-4xl grid content-center justify-items-center w-screen">No Movies here!</div>
+    }
+  </div>
 
 
 
-  
 
 
-<div class="flex justify-center items-center gap-4 mt-20">
+
+  <div class="flex justify-center items-center gap-4 mt-20">
     <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1"
       class="px-4 py-2 rounded text-white hover:bg-[#3f3560] disabled:opacity-50"
       [ngClass]="darkModeService.isDarkMode ? 'bg-[#3b2b70]' : 'bg-[#3b2b70]'">
