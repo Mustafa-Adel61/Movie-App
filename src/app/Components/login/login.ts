@@ -8,6 +8,7 @@ import {
 import { RouterModule, Router } from '@angular/router';
 import { LoginS } from '../../services/login-s';
 import { CommonModule } from '@angular/common';
+import { DarkModeServiceService } from '../../services/DarkModeService.service';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,8 @@ export class Login {
   submitted = false;
   loginFailed = false;
 
-  constructor(private fb: FormBuilder, private LoginS: LoginS, private router: Router) {
+  constructor(private fb: FormBuilder, private LoginS: LoginS, private router: Router,
+    public darkModeService: DarkModeServiceService) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
@@ -46,5 +48,10 @@ export class Login {
       alert('Email or Password Incorrect!');
       this.loginFailed = true;
     }
+  }
+
+
+  toggleDarkMode() {
+    this.darkModeService.toggleDarkMode();
   }
 }

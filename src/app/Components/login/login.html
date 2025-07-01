@@ -1,5 +1,4 @@
-<main
-    class="h-screen  px-4 md:px-20 flex flex-col md:flex-row items-center justify-center overflow-hidden">
+<main class="h-screen  px-4 md:px-20 flex flex-col md:flex-row items-center justify-center overflow-hidden">
 
     <section class="flex w-full md:w-[90%] max-w-6xl items-center justify-between gap-6">
 
@@ -18,22 +17,23 @@
 
                 <div>
                     <input type="email" placeholder="Email" formControlName="email"
-                        class="h-12 w-full rounded-md border border-white bg-transparent text-white placeholder:text-neutral-400 p-4" />
-                    <div *ngIf="submitted && loginForm.get('email')?.invalid" class="text-red-400 text-sm mt-1">Invalid
+                        class="h-12 w-full rounded-md bg-transparent  placeholder:text-neutral-400 p-4"
+                        [ngClass]="darkModeService.isDarkMode ? 'border border-white text-white' : 'text-black border border-black'" />
+                    <div *ngIf="submitted && loginForm.get('email')?.invalid" class="text-red-700 text-sm mt-1">Invalid
                         email address</div>
                 </div>
 
-                <div>
-                    <input type="password" placeholder="Password" formControlName="password"
-                        class="h-12 w-full rounded-md border border-white bg-transparent text-white placeholder:text-neutral-400 p-4" />
-                    <div *ngIf="submitted && loginForm.get('password')?.invalid" class="text-red-400 text-sm">Password
-                        is required</div>
-                </div>
+                <input type="password" placeholder="Password" formControlName="password"
+                    class="h-12 w-full rounded-md bg-transparent  placeholder:text-neutral-400 p-4"
+                    [ngClass]="darkModeService.isDarkMode ? 'border border-white text-white' : 'text-black border border-black'" />
+
 
                 <div *ngIf="loginFailed" class="text-red-400 text-sm text-center">Email or password is incorrect</div>
 
                 <button type="submit"
-                    class="w-full rounded-md bg-[#228ee6] py-2 text-center text-sm text-white transition-all shadow-md hover:bg-sky-700 active:shadow-none disabled:opacity-50">
+                    class="mb-20 w-full rounded-md py-2 text-center text-sm text-white transition-all shadow-md  active:shadow-none disabled:opacity-50"
+                    [ngClass]="darkModeService.isDarkMode ? ' bg-[#7554e1] hover:bg-[#6c5e98d5] text-white' : ' bg-[#201640] hover:bg-[#4e417aed]'">
+
                     Login
                 </button>
             </form>

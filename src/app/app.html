@@ -1,10 +1,9 @@
-
-<div class="relative">
-  <app-navbar class="w-4/5 fixed left-1/12 top-5 z-50 transition-all duration-300">
-  </app-navbar>
+<div [ngClass]="{ 'dark': darkModeService.isDarkMode }">
+  <main [ngClass]="{
+    'bg-[linear-gradient(25deg,#201640_30%,#050b1f_60%,#030a1c_90%)] text-white h-auto': darkModeService.isDarkMode,
+    'bg-[linear-gradient(25deg,#f7f7ff_30%,#ececff_60%,#ffffff_90%)] text-black h-auto': !darkModeService.isDarkMode,
+  }">
+    <app-navbar></app-navbar>
+    <router-outlet></router-outlet>
+  </main>
 </div>
-<router-outlet></router-outlet>
-
-<!-- <app-navbar></app-navbar>
-<router-outlet></router-outlet>
- -->

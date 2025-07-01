@@ -1,36 +1,55 @@
-import { Component, inject, HostListener } from '@angular/core';
+import { Component, inject, HostListener, OnInit, OnDestroy } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { APIFetchingService } from '../../shared/apifetching-service';
 import { LoginS } from '../../services/login-s';
 import { CommonModule } from '@angular/common';
-
+import { DarkModeServiceService } from '../../services/DarkModeService.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
+  standalone: true,
   imports: [RouterModule, CommonModule],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css'
 })
-export class Navbar {
-  isUserImageClicked: boolean = false
-  isMainMenuClicked: boolean = false
+export class Navbar implements OnInit, OnDestroy {
+  isUserImageClicked = false;
+  isMainMenuClicked = false;
   dropdownOpen = false;
+  isNavbarVisible = true;
 
-  movieFetcher = inject(APIFetchingService)
-  constructor(private loginS: LoginS) { }
+  isDarkMode = true;
+  private darkModeSub: Subscription | undefined;
+
+  movieFetcher = inject(APIFetchingService);
+
+  constructor(
+    private loginS: LoginS,
+    public darkModeService: DarkModeServiceService
+  ) { }
+
+  ngOnInit(): void {
+    this.darkModeSub = this.darkModeService.darkMode$.subscribe((mode) => {
+      this.isDarkMode = mode;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.darkModeSub?.unsubscribe();
+  }
 
   changeLang(e: Event) {
-    const lang = (e.target as HTMLSelectElement).value
-    this.movieFetcher.selectedLang.set(lang)
-
+    const lang = (e.target as HTMLSelectElement).value;
+    this.movieFetcher.selectedLang.set(lang);
   }
 
   OpenUserAccount() {
-    this.isUserImageClicked = !this.isUserImageClicked
+    this.isUserImageClicked = !this.isUserImageClicked;
   }
 
   OpenMainMenu() {
-    this.isMainMenuClicked = !this.isMainMenuClicked
+    this.isMainMenuClicked = !this.isMainMenuClicked;
   }
 
   toggleDropdown() {
@@ -41,14 +60,13 @@ export class Navbar {
     this.loginS.logout();
   }
 
-
-  isNavbarVisible = true;
+  toggleDarkMode() {
+    this.darkModeService.toggleDarkMode();
+  }
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
     const scrollY = window.scrollY;
-
-    // لو المستخدم نزل أكتر من 100px نخفي الـ nav
     this.isNavbarVisible = scrollY < 100;
   }
 }
