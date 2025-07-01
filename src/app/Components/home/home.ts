@@ -1,46 +1,78 @@
 import { Component, OnInit } from '@angular/core';
 import { DataFromAPI } from '../../data-from-api';
+import { CommonModule } from '@angular/common';
+import { IMovie } from '../../interfaces/imovie';
+import { DarkModeServiceService } from '../../services/DarkModeService.service';
 
 @Component({
   selector: 'app-home',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
-export class Home implements OnInit{
-//  counter:number[]=[1,2,3,4,5,6,66,6,66];
-imagePhath:string='https://image.tmdb.org/t/p/w500'
- movieData:Imovie[]=[]
- wishlist:Imovie[]=[]
- constructor(private _DataFromAPI:DataFromAPI){}
+export class Home implements OnInit {
+  imagePhath: string = 'https://image.tmdb.org/t/p/w500';
+  movieData: IMovie[] = [];
+   wishlist:Imovie[]=[];
+  currentPage: number = 1;
+  totalPages: number = 0;
+  isLoading: boolean = false;
 
-ngOnInit(): void {
-  const saved = localStorage.getItem('wishlist');
+  constructor(private _DataFromAPI: DataFromAPI,
+    public darkModeService: DarkModeServiceService) { }
+
+  ngOnInit(): void {
+    
+    const saved = localStorage.getItem('wishlist');
   if (saved) {
     this.wishlist = JSON.parse(saved);
   }
 
-  this._DataFromAPI.getData().subscribe({
-    next: (res) => {
-      console.log(res.results);
+    this.loadMovies();
+  }
 
-      this.movieData = res.results.map((movie:any) => {
-        return {
+  loadMovies(page: number = 1): void {
+    this.isLoading = true;
+    this._DataFromAPI.getData(page).subscribe({
+      next: (res) => {
+        console.log(res.results);
+        const processedData = res.results.map((movie: IMovie) => ({
           ...movie,
-          inWishlist: this.wishlist.some(m => m.id === movie.id)
-        };
-      });
-    },
-    error: (err) => {
-      console.error('Error fetching data from API', err);
+         inWishlist: this.wishlist.some(m => m.id === movie.id),
+
+          isFavorite: false
+        }));
+        // this.totalPages = res.total_pages;
+        // this.currentPage = res.page;
+        // this.isLoading = false;
+        setTimeout(() => {
+          this.movieData = processedData;
+          this.totalPages = res.total_pages;
+          this.currentPage = res.page;
+          this.isLoading = false;
+        }, 1000);
+      },
+      error: (err) => {
+        setTimeout(() => {
+          this.isLoading = false;
+          console.error('Error fetching movies', err);
+        }, 1000);
+      }
+    });
+  }
+
+  changePage(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.loadMovies(page);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-  });
-}
+  }
 
- 
- 
+  toggleDarkMode() {
+    this.darkModeService.toggleDarkMode();
+  }
 
- toggleWishlist(movie: Imovie) {
+  toggleWishlist(movie: Imovie) {
   movie.inWishlist = !movie.inWishlist;
 
   if (movie.inWishlist) {
@@ -52,5 +84,12 @@ ngOnInit(): void {
   
   localStorage.setItem('wishlist', JSON.stringify(this.wishlist));
 }
-
 }
+
+
+
+
+
+
+
+

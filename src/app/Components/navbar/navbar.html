@@ -1,1 +1,99 @@
-<p>navbar works!</p>
+<nav [ngClass]="{
+  'opacity-100 pointer-events-auto': isNavbarVisible,
+  'opacity-0 pointer-events-none': !isNavbarVisible
+}" class="fixed top-0 start-0 min-w-full bg-transparent text-white  z-50 transition-opacity duration-500">
+
+
+  <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+    <div class="relative flex h-16 items-center justify-between">
+      <!-- Mobile menu button -->
+      <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+        <button type="button"
+          class="p-2 text-gray-300 dark:text-black hover:bg-[#201640] hover:text-white rounded-md focus:outline-none"
+          (click)="OpenMainMenu()">
+          <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Logo and main links -->
+      <div class="flex flex-1 items-center justify-center sm:justify-start">
+        <div class="flex-shrink-0">
+          <img class="h-8 w-auto" src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
+            alt="Logo">
+        </div>
+        <div class="hidden sm:ml-6 sm:block">
+          <div class="flex space-x-4">
+            <a routerLink="/home"
+              class="px-3 py-2 rounded-md text-sm font-medium hover:bg-[#bbbbbe]  hover:text-[#050b1f]"
+              [ngClass]="isDarkMode ? 'text-white' : 'text-black'">Home</a>
+            <a routerLink="/register"
+              class="px-3 py-2 rounded-md text-sm font-medium hover:bg-[#bbbbbe]  hover:text-[#050b1f]"
+              [ngClass]="isDarkMode ? 'text-white' : 'text-black'">Register</a>
+            <a routerLink="/login"
+              class="px-3 py-2 rounded-md text-sm font-medium hover:bg-[#bbbbbe]  hover:text-[#050b1f]"
+              [ngClass]="isDarkMode ? 'text-white' : 'text-black'">Login</a>
+
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Language Select -->
+      <select (change)="changeLang($event)" class="px-3 py-2 text-sm rounded-md focus:ring focus:ring-blue-500"
+        [ngClass]="isDarkMode ? 'bg-[#201640] text-white' : 'text-black'">
+        <option value="en" selected>en</option>
+        <option value="ar">ar</option>
+        <option value="fr">fn</option>
+        <option value="es">es</option>
+      </select>
+      <!-- Dark Mode Toggle Button -->
+      <button (click)="toggleDarkMode()" class="px-3 py-2">
+        <i class="fa-solid fa-circle-half-stroke text-xl" [ngClass]="isDarkMode ? 'text-white' : 'text-gray-800'"></i>
+      </button>
+
+
+      <!-- Profile -->
+      <div class="relative ml-3">
+        <button (click)="OpenUserAccount()" type="button"
+          class="flex rounded-full bg-[#201640] text-sm focus:outline-none focus:ring-2 focus:ring-white">
+          <img class="h-8 w-8 rounded-full"
+            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+            alt="User" />
+        </button>
+
+        <!-- User Dropdown -->
+        @if (isUserImageClicked) {
+        <div class="absolute right-0 z-50 mt-2 w-48 rounded-md shadow-lg ring-1 ring-white/20 py-1"
+          [ngClass]="isDarkMode ? 'bg-[#201640] text-white ' : 'shadow-[#201640] shadow-2xl text-black'">
+          <a routerLink="/userAccount" (click)="isUserImageClicked = false" class="block px-4 py-2 text-sm "
+            [ngClass]="isDarkMode ? 'text-white hover:bg-[#050b1f]' : 'text-black hover:text-white hover:bg-[#201640]'">Your
+            Profile</a>
+          <a href="#" class="block px-4 py-2 text-sm"
+            [ngClass]="isDarkMode ? 'text-white hover:bg-[#050b1f]' : 'text-black hover:text-white hover:bg-[#201640]'">Settings</a>
+          <button (click)="logout()"
+            class="w-full text-left px-4 py-2 text-sm bg-transparent hover:bg-red-600 rounded-md"
+            [ngClass]="isDarkMode ? 'text-white' : 'text-black hover:text-white'">
+            Logout
+          </button>
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  @if (isMainMenuClicked) {
+  <div class="sm:hidden" id="mobile-menu">
+    <div class="space-y-1 px-2 pt-2 pb-3 bg-[#201640]">
+      <a routerLink="/home"
+        class="block px-3 py-2 text-base font-medium text-white dark:text-white hover:bg-[#050b1f]">Home</a>
+      <a routerLink="/register"
+        class="block px-3 py-2 text-base font-medium text-white dark:text-white hover:bg-[#050b1f]">Register</a>
+      <a routerLink="/login"
+        class="block px-3 py-2 text-base font-medium text-white dark:text-white hover:bg-[#050b1f]">Login</a>
+    </div>
+  </div>
+  }
+</nav>

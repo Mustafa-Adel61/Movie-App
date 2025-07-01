@@ -1,2 +1,9 @@
-<!-- <app-home></app-home> -->
-<app-wishlist></app-wishlist>
+<div [ngClass]="{ 'dark': darkModeService.isDarkMode }">
+  <main [ngClass]="{
+    'bg-[linear-gradient(25deg,#201640_30%,#050b1f_60%,#030a1c_90%)] text-white h-auto': darkModeService.isDarkMode,
+    'bg-[linear-gradient(25deg,#f7f7ff_30%,#ececff_60%,#ffffff_90%)] text-black h-auto': !darkModeService.isDarkMode,
+  }">
+    <app-navbar></app-navbar>
+    <router-outlet></router-outlet>
+  </main>
+</div>
