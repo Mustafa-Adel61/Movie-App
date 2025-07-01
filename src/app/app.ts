@@ -1,5 +1,8 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+
+
 import * as AOS from 'aos';
 import { Navbar } from './Components/navbar/navbar';
 import { CommonModule } from '@angular/common';

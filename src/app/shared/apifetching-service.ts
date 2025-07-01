@@ -8,12 +8,19 @@ import { IMovie } from '../interfaces/imovie';
 export class APIFetchingService {
 
   constructor() {
-    effect(() => {
-      if (this.myHttpResource.status() === 'error') {
-        this.RetryWithNewId()
-      }
-    })
-  }
+  
+  effect(() => {
+    const lang = this.selectedLang(); 
+
+  });
+
+ 
+  effect(() => {
+    if (this.myHttpResource.status() === 'error') {
+      this.RetryWithNewId();
+    }
+  });
+}
 
   movieId = signal(this.GetRandomMovieId())
   GetRandomMovieId(): number {

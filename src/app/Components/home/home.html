@@ -33,12 +33,13 @@
           </div>
         </div>
       </div>
+      </div>
+      } @empty {
+      <div class="font-bold text-4xl grid content-center justify-items-center w-screen">No Movies here!</div>
+      }
     </div>
-    } @empty {
-    <div class="font-bold text-4xl grid content-center justify-items-center w-screen">No Movies here!</div>
-    }
 
-  </div>
+
 
   <div class="flex justify-center items-center gap-4 mt-20">
     <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1"

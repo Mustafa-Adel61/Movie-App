@@ -3,6 +3,8 @@ import { RouterModule } from '@angular/router';
 import { APIFetchingService } from '../../shared/apifetching-service';
 import { LoginS } from '../../services/login-s';
 import { CommonModule } from '@angular/common';
+import { TranslateService } from '@ngx-translate/core';
+
 import { DarkModeServiceService } from '../../services/DarkModeService.service';
 import { Subscription } from 'rxjs';
 
@@ -25,7 +27,7 @@ export class Navbar implements OnInit, OnDestroy {
   movieFetcher = inject(APIFetchingService);
 
   constructor(
-    private loginS: LoginS,
+    public loginS: LoginS,
     public darkModeService: DarkModeServiceService
   ) { }
 
