@@ -1,43 +1,17 @@
-// import { Component, OnInit } from '@angular/core';
-// import { DataFromAPI } from '../../data-from-api';
-
-// @Component({
-//   selector: 'app-wishlist',
-//   imports: [],
-//   templateUrl: './wishlist.html',
-//   styleUrl: './wishlist.css'
-// })
-// export class Wishlist implements OnInit{
-//    wishlist: Imovie[] = [];
-//    recommendedMovies: any[] = [];
-//    imagePhath: string = 'https://image.tmdb.org/t/p/w500';
-//    ///recommended movies
-//   constructor(private _DataFromAPI: DataFromAPI) {}
-
-//    ngOnInit(): void {
-//     const saved = localStorage.getItem('wishlist');
-//     if (saved) {
-//       this.wishlist = JSON.parse(saved);
-//     }
-//    //recommended movies part 
-
-//   }
- 
-
-
 
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DataFromAPI } from '../../data-from-api';
 import { DarkModeServiceService } from '../../services/DarkModeService.service';
 import { CommonModule } from '@angular/common';
 import { WishlistCountService } from '../../services/wishlist-count-service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-wishlist',
   templateUrl: './wishlist.html',
   styleUrl: './wishlist.css',
-    imports: [CommonModule],
-  
+  imports: [CommonModule, RouterModule],
+
 })
 export class Wishlist implements OnInit {
 
@@ -46,7 +20,7 @@ export class Wishlist implements OnInit {
   imagePhath: string = 'https://image.tmdb.org/t/p/w500';
   //  @viewChild('scrollContainer', { static: false }) scrollContainer!: ElementRe
   @ViewChild('scrollContainer') scrollContainer!: ElementRef;
-  constructor(private _DataFromAPI: DataFromAPI,public darkModeService:DarkModeServiceService, public _wishlistS: WishlistCountService) {}
+  constructor(private _DataFromAPI: DataFromAPI, public darkModeService: DarkModeServiceService, public _wishlistS: WishlistCountService) { }
 
   ngOnInit(): void {
 
@@ -76,7 +50,7 @@ export class Wishlist implements OnInit {
         }
       });
     }
-  
+
     this._wishlistS.GetWishlistCount()
   }
 
@@ -87,8 +61,8 @@ export class Wishlist implements OnInit {
     this._wishlistS.GetWishlistCount()
   }
 
-  
-    scrollLeft() {
+
+  scrollLeft() {
     this.scrollContainer.nativeElement.scrollBy({ left: -300, behavior: 'smooth' });
   }
 
@@ -104,7 +78,7 @@ export class Wishlist implements OnInit {
 
 
 
- 
+
 
 
 

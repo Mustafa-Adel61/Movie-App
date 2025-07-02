@@ -5,10 +5,11 @@ import { IMovie } from '../../interfaces/imovie';
 import { DarkModeServiceService } from '../../services/DarkModeService.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { WishlistCountService } from '../../services/wishlist-count-service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, TranslateModule],
+  imports: [CommonModule, TranslateModule, RouterModule],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
@@ -57,7 +58,6 @@ export class Home implements OnInit {
         const processedData = res.results.map((movie: IMovie) => ({
           ...movie,
           inWishlist: this.wishlist.some(m => m.id === movie.id),
-
           isFavorite: false
         }));
         // this.totalPages = res.total_pages;

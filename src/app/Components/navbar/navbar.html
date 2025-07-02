@@ -8,9 +8,8 @@
     <div class="relative flex h-16 items-center justify-between">
       <!-- Mobile menu button -->
       <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
-        <button type="button"
-          class="p-2 text-gray-300 dark:text-black hover:bg-[#201640] hover:text-white rounded-md focus:outline-none"
-          (click)="OpenMainMenu()">
+        <button type="button" class="p-2 rounded-md focus:outline-none"
+          [ngClass]="isDarkMode ? 'text-white' : 'text-black'" (click)="OpenMainMenu()">
           <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
           </svg>
@@ -37,12 +36,12 @@
               </span>
 
               <!-- أيقونة القلب -->
-              <svg routerLink="/wishlist"
-                class="h-8 w-8 my-auto text-xl fill-white hover:fill-red-500 cursor-pointer transition-all duration-300"
-                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                <path
-                  d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z" />
-              </svg>
+              <a routerLink="/wishlist">
+                <i class="fa-solid fa-heart text-2xl cursor-pointer transition-all hover:text-red-500"
+                  [ngClass]="isDarkMode ? 'text-white' : 'text-black'"></i>
+
+              </a>
+
             </div>
 
 
@@ -81,25 +80,22 @@
       @if(loginS.isLogged()){
       <div class="relative ml-3">
 
-        <button (click)="OpenUserAccount()" type="button"
-          class="flex rounded-full bg-[#201640]  cursor-pointer">
-          <i class="fa-solid fa-circle-user text-3xl"></i>
+        <button (click)="OpenUserAccount()" type="button" class="flex cursor-pointer">
+          <i class="fa-solid fa-user text-2xl" [ngClass]="isDarkMode ? 'text-white ' : 'text-black '"></i>
         </button>
-
-
-
 
 
         <!-- User Dropdown -->
         @if (isUserImageClicked) {
         <div class="absolute right-0 z-50 mt-2 w-48 rounded-md shadow-lg ring-1 ring-white/20 py-1"
-          [ngClass]="isDarkMode ? 'bg-[#201640] text-white ' : 'shadow-[#201640] shadow-2xl text-black'">
+          [ngClass]="isDarkMode ? 'bg-[#201640] text-white ' : 'bg-white shadow-[#201640] shadow-2xl text-black'">
           <a routerLink="/userAccount" (click)="isUserImageClicked = false" class="block px-4 py-2 text-sm "
-            [ngClass]="isDarkMode ? 'text-white hover:bg-[#050b1f]' : 'text-black hover:text-white hover:bg-[#201640]'">{{'Your
-            Profile'|translate}}</a>
+            [ngClass]="isDarkMode ? 'text-white hover:bg-[#050b1f]' : 'text-black hover:text-white hover:bg-[#201640]'">
+            {{'Your Profile'|translate}}</a>
           <a href="#" class="block px-4 py-2 text-sm"
-            [ngClass]="isDarkMode ? 'text-white hover:bg-[#050b1f]' : 'text-black hover:text-white hover:bg-[#201640]'">Settings</a>
-          <button (click)="logout()"
+            [ngClass]="isDarkMode ? 'text-white hover:bg-[#050b1f]' : 'text-black hover:text-white hover:bg-[#201640]'">{{'Settings'|translate}}</a>
+
+          <button (click)="logout()" type="button"
             class="w-full text-left px-4 py-2 text-sm bg-transparent hover:bg-red-600 rounded-md"
             [ngClass]="isDarkMode ? 'text-white' : 'text-black hover:text-white'">
             {{'Logout' | translate}}
@@ -116,13 +112,32 @@
   <!-- Mobile menu -->
   @if (isMainMenuClicked) {
   <div class="sm:hidden" id="mobile-menu">
-    <div class="space-y-1 px-2 pt-2 pb-3 bg-[#201640]">
-      <a routerLink="/home"
-        class="block px-3 py-2 text-base font-medium text-white dark:text-white hover:bg-[#050b1f]">{{'Home' |
-        translate}}</a>
+    <!-- <div class="space-y-1 px-2 pt-2 pb-3 shadow-2xl gap-4 absolute left-0 z-50 mt-2 w-48"
+    [ngClass]="isDarkMode ? 'bg-[#201640] text-white ' : 'shadow-[#201640] shadow-2xl text-black'"> -->
+    <div class="absolute left-5 top-12 z-50 px-2 pt-2 pb-3 mt-2 w-48 rounded-md shadow-lg ring-1 ring-white/20 py-1"
+      [ngClass]="isDarkMode ? 'bg-[#201640] text-white ' : 'bg-white shadow-[#201640] shadow-2xl text-black'">
+
+      <a routerLink="/home" class="block px-3 py-2 text-base font-medium hover:bg-[#bbbbbe]  hover:text-[#050b1f]"
+        [ngClass]="isDarkMode ? 'text-white' : 'text-black'">{{'Home' | translate }}</a>
+
+      <div class="flex items-center relative mt-5 ps-5">
+        <!-- عدد العناصر -->
+        <span
+          class="text-white w-5 h-5 z-10 flex justify-center items-center absolute left-[2.3rem] top-[-0.5rem] rounded-full text-xs font-bold bg-red-500 ring-2 ring-[#050B1E]">
+          {{ wishlistS.wishlistCount() }}
+        </span>
+
+        <!-- أيقونة القلب -->
+        <a routerLink="/wishlist">
+          <i class="fa-solid fa-heart text-2xl cursor-pointer transition-all hover:text-red-500"
+            [ngClass]="isDarkMode ? 'text-white' : 'text-black'"></i>
+
+        </a>
+
+      </div>
 
 
-      <div class="relative">
+      <!-- <div class="relative">
 
         <span
           class="text-white w-5 h-5 z-10 flex justify-center items-center absolute left-[2.3rem] top-[-0.5rem] rounded-full text-xs font-bold bg-red-500 ring-2 ring-[#050B1E]">
@@ -136,7 +151,7 @@
           <path
             d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z" />
         </svg>
-      </div>
+      </div> -->
 
 
       @if(!loginS.isLogged()){

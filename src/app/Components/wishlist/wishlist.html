@@ -5,8 +5,10 @@
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
       @for (item of wishlist; track item.id) {
       <div class="relative cursor-pointer group" data-aos="zoom-out" data-aos-duration="500" data-aos-offset="150">
-        <img [src]="imagePhath + item.poster_path" alt="Movie Poster"
-          class="w-full h-64 object-cover rounded-xl shadow-md hover:-translate-1.5 transition-all ease-in duration-200" />
+        <a [routerLink]="['/details', item.id]">
+          <img [src]="imagePhath + item.poster_path" alt="Movie Poster"
+            class="w-full h-64 object-cover rounded-xl shadow-md hover:-translate-1.5 transition-all ease-in duration-200" />
+        </a>
 
         <!-- Movie Info -->
         <div class="mt-2">
@@ -53,16 +55,21 @@
       <div #scrollContainer
         class="overflow-x-auto whitespace-nowrap space-x-4 pb-4 scroll-smooth transition-all px-10 scrollbar-hide w-[98%]">
         @for (movie of recommendedMovies; track movie.id) {
-        <div
-          class="inline-block w-52 bg-white/5 hover:bg-white/10 rounded-xl p-3 mr-3 transition backdrop-blur-md hover:scale-105"
-          [ngClass]="darkModeService.isDarkMode ? 'text-white' : 'text-black'">
-          <img [src]="imagePhath + movie.poster_path" alt="recommended movie"
-            class="w-full h-64 object-cover rounded-lg mb-2" />
-          <h4 class="text-md font-semibold truncate">{{ movie.title }}</h4>
-          <p class="text-xs" [ngClass]="darkModeService.isDarkMode ? 'text-white' : 'text-black'">{{ movie.release_date
-            }}</p>
-        </div>
-        }
+        <a [routerLink]="['/details', movie.id]">
+          <div
+            class="inline-block w-52 bg-white/5 hover:bg-white/10 rounded-xl p-3 mr-3 transition backdrop-blur-md hover:scale-105"
+            [ngClass]="darkModeService.isDarkMode ? 'text-white' : 'text-black'">
+            <img [src]="imagePhath + movie.poster_path" alt="recommended movie"
+              class="w-full h-64 object-cover rounded-lg mb-2" />
+            <h4 class="text-md font-semibold truncate">{{ movie.title }}</h4>
+            <p class="text-xs" [ngClass]="darkModeService.isDarkMode ? 'text-white' : 'text-black'">
+              {{movie.release_date}}</p>
+          </div>
+        </a>
+        }@empty {
+        <div class="font-bold text-xl flex justify-center items-center w-screen">
+          You haven't added any movies to your favorites yet. Start exploring!
+        </div> }
       </div>
     </div>
   </section>

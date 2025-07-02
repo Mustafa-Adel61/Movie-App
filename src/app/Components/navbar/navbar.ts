@@ -41,8 +41,6 @@ export class Navbar implements OnInit, OnDestroy {
 
     effect(() => {
       const wishListCount = this.wishlistS.wishlistCount();
-
-
     })
   }
 
