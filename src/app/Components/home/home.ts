@@ -2,7 +2,6 @@ import { Component, effect, OnInit } from '@angular/core';
 import { DataFromAPI } from '../../data-from-api';
 import { CommonModule } from '@angular/common';
 import { IMovie } from '../../interfaces/imovie';
-import { MovieHead } from "../movie-head/movie-head";
 import { DarkModeServiceService } from '../../services/DarkModeService.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { WishlistCountService } from '../../services/wishlist-count-service';
@@ -11,7 +10,7 @@ import { IGener } from '../../interfaces/igener';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, MovieHead, TranslateModule],
+  imports: [CommonModule, TranslateModule],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
