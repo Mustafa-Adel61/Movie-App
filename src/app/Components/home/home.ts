@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, effect, inject, OnInit } from '@angular/core';
 import { DataFromAPI } from '../../data-from-api';
 import { CommonModule } from '@angular/common';
 import { IMovie } from '../../interfaces/imovie';
 import { MovieHead } from "../movie-head/movie-head";
 import { DarkModeServiceService } from '../../services/DarkModeService.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, MovieHead],
+  imports: [CommonModule, MovieHead,TranslateModule],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
@@ -18,8 +19,18 @@ export class Home implements OnInit {
   totalPages: number = 0;
   isLoading: boolean = false;
 
+  
+
   constructor(private _DataFromAPI: DataFromAPI,
-    public darkModeService: DarkModeServiceService) { }
+    public darkModeService: DarkModeServiceService) {
+
+      effect(() => {
+        const currentLang = _DataFromAPI.lang();
+        this.loadMovies(1)
+      })
+     }
+
+     
 
   ngOnInit(): void {
     this.loadMovies();

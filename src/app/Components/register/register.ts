@@ -14,9 +14,10 @@ import {
 import { CommonModule } from '@angular/common';
 import { LoginS } from '../../services/login-s';
 import { DarkModeServiceService } from '../../services/DarkModeService.service';
+import { TranslateModule } from '@ngx-translate/core';
 @Component({
   selector: 'app-register',
-  imports: [RouterModule, ReactiveFormsModule, CommonModule],
+  imports: [RouterModule, ReactiveFormsModule, CommonModule, TranslateModule],
   templateUrl: './register.html',
   styleUrl: './register.css'
 })

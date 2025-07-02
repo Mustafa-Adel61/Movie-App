@@ -9,11 +9,12 @@ import { RouterModule, Router } from '@angular/router';
 import { LoginS } from '../../services/login-s';
 import { CommonModule } from '@angular/common';
 import { DarkModeServiceService } from '../../services/DarkModeService.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterModule, CommonModule],
+  imports: [ReactiveFormsModule, RouterModule, CommonModule, TranslateModule],
   templateUrl: './login.html',
   styleUrl: './login.css'
 })
