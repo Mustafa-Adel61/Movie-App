@@ -30,6 +30,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DataFromAPI } from '../../data-from-api';
 import { DarkModeServiceService } from '../../services/DarkModeService.service';
 import { CommonModule } from '@angular/common';
+import { WishlistCountService } from '../../services/wishlist-count-service';
 
 @Component({
   selector: 'app-wishlist',
@@ -45,16 +46,15 @@ export class Wishlist implements OnInit {
   imagePhath: string = 'https://image.tmdb.org/t/p/w500';
   //  @viewChild('scrollContainer', { static: false }) scrollContainer!: ElementRe
   @ViewChild('scrollContainer') scrollContainer!: ElementRef;
-  constructor(private _DataFromAPI: DataFromAPI,public darkModeService:DarkModeServiceService) {}
+  constructor(private _DataFromAPI: DataFromAPI,public darkModeService:DarkModeServiceService, public _wishlistS: WishlistCountService) {}
 
   ngOnInit(): void {
-    // ⬇️ تحميل المفضلة من localStorage
+
     const saved = localStorage.getItem('wishlist');
     if (saved) {
       this.wishlist = JSON.parse(saved);
     }
 
-    // ⬇️ جلب الأفلام المقترحة
     if (this.wishlist.length > 0) {
       const movieId = this.wishlist[0].id;
       this._DataFromAPI.getRecommended(movieId).subscribe({
@@ -66,7 +66,7 @@ export class Wishlist implements OnInit {
         }
       });
     } else {
-      // ⬇️ لو مفيش مفضلة نجيب trending
+
       this._DataFromAPI.getTrending().subscribe({
         next: (res) => {
           this.recommendedMovies = res.results;
@@ -76,12 +76,15 @@ export class Wishlist implements OnInit {
         }
       });
     }
+  
+    this._wishlistS.GetWishlistCount()
   }
 
   // ⬇️ إزالة من المفضلة
   removeFromWishlist(movie: any) {
     this.wishlist = this.wishlist.filter(m => m.id !== movie.id);
     localStorage.setItem('wishlist', JSON.stringify(this.wishlist));
+    this._wishlistS.GetWishlistCount()
   }
 
   

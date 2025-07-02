@@ -1,32 +1,50 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, effect, inject, OnInit, Signal, signal } from '@angular/core';
 import { DataFromAPI } from '../../data-from-api';
 import { CommonModule } from '@angular/common';
 import { IMovie } from '../../interfaces/imovie';
 import { DarkModeServiceService } from '../../services/DarkModeService.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { WishlistCountService } from '../../services/wishlist-count-service';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule],
+  imports: [CommonModule, TranslateModule],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
 export class Home implements OnInit {
   imagePhath: string = 'https://image.tmdb.org/t/p/w500';
   movieData: IMovie[] = [];
-   wishlist:IMovie[]=[];
+  wishlist: IMovie[] = [];
   currentPage: number = 1;
   totalPages: number = 0;
   isLoading: boolean = false;
 
+
+
+
   constructor(private _DataFromAPI: DataFromAPI,
-    public darkModeService: DarkModeServiceService) { }
+    public darkModeService: DarkModeServiceService, private _wishlistCountService: WishlistCountService) {
+
+    _wishlistCountService.GetWishlistCount()
+    effect(() => {
+      const currentLang = _DataFromAPI.lang();
+      this.loadMovies(1)
+    })
+
+    effect(() => {
+      const wishListCount = _wishlistCountService.wishlistCount();
+    })
+  }
+
+
 
   ngOnInit(): void {
-    
+
     const saved = localStorage.getItem('wishlist');
-  if (saved) {
-    this.wishlist = JSON.parse(saved);
-  }
+    if (saved) {
+      this.wishlist = JSON.parse(saved);
+    }
 
     this.loadMovies();
   }
@@ -38,7 +56,7 @@ export class Home implements OnInit {
         console.log(res.results);
         const processedData = res.results.map((movie: IMovie) => ({
           ...movie,
-         inWishlist: this.wishlist.some(m => m.id === movie.id),
+          inWishlist: this.wishlist.some(m => m.id === movie.id),
 
           isFavorite: false
         }));
@@ -73,18 +91,23 @@ export class Home implements OnInit {
   }
 
   toggleWishlist(movie: IMovie) {
-  movie.inWishlist = !movie.inWishlist;
+    movie.inWishlist = !movie.inWishlist;
 
-  if (movie.inWishlist) {
-    this.wishlist.push(movie);
-  } else {
-    this.wishlist = this.wishlist.filter(m => m.id !== movie.id);
+    if (movie.inWishlist) {
+      this.wishlist.push(movie);
+    } else {
+      this.wishlist = this.wishlist.filter(m => m.id !== movie.id);
+    }
+
+
+    localStorage.setItem('wishlist', JSON.stringify(this.wishlist));
+    this._wishlistCountService.GetWishlistCount()
+
   }
 
-  
-  localStorage.setItem('wishlist', JSON.stringify(this.wishlist));
+
 }
-}
+
 
 
 
