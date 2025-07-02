@@ -1,4 +1,4 @@
-import { Component, inject, HostListener, OnInit, OnDestroy } from '@angular/core';
+import { Component, inject, HostListener, OnInit, OnDestroy, effect, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { APIFetchingService } from '../../shared/apifetching-service';
 import { LoginS } from '../../services/login-s';
@@ -8,6 +8,7 @@ import { DarkModeServiceService } from '../../services/DarkModeService.service';
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { DataFromAPI } from '../../data-from-api';
+import { WishlistCountService } from '../../services/wishlist-count-service';
 
 @Component({
   selector: 'app-navbar',
@@ -22,19 +23,27 @@ export class Navbar implements OnInit, OnDestroy {
   dropdownOpen = false;
   isNavbarVisible = true;
 
+
   isDarkMode = true;
   private darkModeSub: Subscription | undefined;
 
   movieFetcher = inject(APIFetchingService);
-  translate = inject(TranslateService); 
+  translate = inject(TranslateService);
+  public wishlistS = inject(WishlistCountService)
 
   constructor(
     public loginS: LoginS,
     public darkModeService: DarkModeServiceService,
     public _DataFromAPI: DataFromAPI
   ) {
-    this.translate.setDefaultLang('en'); 
+    this.translate.setDefaultLang('en');
     this.translate.use('en');
+
+    effect(() => {
+      const wishListCount = this.wishlistS.wishlistCount();
+
+
+    })
   }
 
   ngOnInit(): void {
@@ -47,10 +56,11 @@ export class Navbar implements OnInit, OnDestroy {
     this.darkModeSub?.unsubscribe();
   }
 
+
   changeLang(e: Event) {
     const lang = (e.target as HTMLSelectElement).value;
     this._DataFromAPI.lang.set(lang)
-    
+
     this.translate.use(lang);
 
     document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
