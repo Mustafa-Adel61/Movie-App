@@ -9,11 +9,11 @@
 
         <div class="w-full max-w-md ">
             <form class="space-y-6 " [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-                <h2 class="font-bold text-4xl text-center">Welcome</h2>
+                <h2 class="font-bold text-4xl text-center">{{'Welcome' | translate}}</h2>
 
                 <div class="flex items-center justify-between">
-                    <h2 class="font-bold text-2xl">Sign Up</h2>
-                    <a [routerLink]="['/login']" class="underline text-sm hover:text-blue-400">Log in</a>
+                    <h2 class="font-bold text-2xl">{{'Sign Up'| translate}}</h2>
+                    <a [routerLink]="['/login']" class="underline text-sm hover:text-blue-400">{{'Login' | translate}}</a>
                 </div>
 
 
@@ -22,51 +22,51 @@
                         class="h-12 w-full rounded-md bg-transparent placeholder:text-neutral-400 p-4"
                         [ngClass]="darkModeService.isDarkMode ? 'border border-white text-white' : 'text-black border border-black'" />
                     <div *ngIf="submitted && registerForm.get('email')?.invalid" class="text-red-700 text-sm mt-1">
-                        Invalid email address
+                        {{'Invalid email address'| translate}}
                     </div>
                 </div>
 
-                <h2 class="font-bold text-xl">Personal Data</h2>
+                <h2 class="font-bold text-xl">{{'Personal Data' | translate}}</h2>
 
                 <div class="space-y-4">
-                    <input type="text" placeholder="First Name" formControlName="firstName"
+                    <input type="text" placeholder="{{'First Name' | translate}}" formControlName="firstName"
                         class="h-12 w-full rounded-md  bg-transparent placeholder:text-neutral-400 p-4"
                         [ngClass]="darkModeService.isDarkMode ? 'border border-white text-white' : 'text-black border border-black'" />
 
                     <div *ngIf="submitted && registerForm.get('firstName')?.invalid" class="text-red-700 text-sm">
-                        First name is required (min 4 letters)
+                        {{'First name is required (min 4 letters)'| translate}}
                     </div>
 
-                    <input type="text" placeholder="Last Name" formControlName="lastName"
+                    <input type="text" placeholder="{{'Last Name'| translate}}" formControlName="lastName"
                         class="h-12 w-full rounded-md  bg-transparent  placeholder:text-neutral-400 p-4"
                         [ngClass]="darkModeService.isDarkMode ? 'border border-white text-white' : 'text-black border border-black'" />
 
                     <div *ngIf="submitted && registerForm.get('lastName')?.invalid" class="text-red-700 text-sm">
-                        Last name is required (min 4 letters)
+                        {{'Last name is required (min 4 letters)'| translate}}
                     </div>
 
-                    <input type="password" placeholder="Password" formControlName="password"
+                    <input type="password" placeholder="{{'Password' | translate}}" formControlName="password"
                         class="h-12 w-full rounded-md bg-transparent  placeholder:text-neutral-400 p-4"
                         [ngClass]="darkModeService.isDarkMode ? 'border border-white text-white' : 'text-black border border-black'" />
 
                     <div *ngIf="submitted && registerForm.get('password')?.invalid" class="text-red-700 text-sm">
-                        Password must be at least 6 characters
+                        {{'Password must be at least 6 characters'|translate}}
                     </div>
 
-                    <input type="password" placeholder="Confirm Password" formControlName="confirmPassword"
+                    <input type="password" placeholder="{{'Confirm Password'| translate}}" formControlName="confirmPassword"
                         class="h-12 w-full rounded-md  bg-transparent  placeholder:text-neutral-400 p-4"
                         [ngClass]="darkModeService.isDarkMode ? 'border border-white text-white' : 'text-black border border-black'" />
 
 
                     <div *ngIf="submitted && registerForm.errors?.['passwordMismatch']" class="text-red-700 text-sm">
-                        Passwords do not match
+                        {{'Passwords do not match'| translate}}
                     </div>
                 </div>
 
                 <button type="submit"
                     class="mb-20 w-full rounded-md py-2 text-center text-sm text-white transition-all shadow-md  active:shadow-none disabled:opacity-50"
                     [ngClass]="darkModeService.isDarkMode ? ' bg-[#7554e1] hover:bg-[#6c5e98d5] text-white' : ' bg-[#201640] hover:bg-[#4e417aed]'">
-                    Register
+                    {{'Register' | translate}}
                 </button>
             </form>
         </div>
