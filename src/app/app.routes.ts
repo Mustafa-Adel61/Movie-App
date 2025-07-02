@@ -24,14 +24,21 @@ export const routes: Routes = [
         canActivate: [authRequiredGuard]
     },
     {
+      path:'wishlist',
+      loadComponent:()=>import('./Components/wishlist/wishlist').then(w=>w.Wishlist),
+      canActivate:[authRequiredGuard]
+    },
+    {
       path:"",
       redirectTo:"home" , 
       pathMatch:"full"
     },
+    
     {
         path: '**',
         redirectTo: 'home'
     }
+
 
 ];
 
