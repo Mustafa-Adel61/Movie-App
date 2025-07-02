@@ -8,11 +8,26 @@
   </div>
 
 
+<div class="genres-filter">
+  <button
+    (click)="onGenreSelected(null)"
+    [class.active]="selectedGenreId === null">
+    {{'All Genres' | translate}}
+  </button>
+
+  <button
+    *ngFor="let genre of generList"
+    (click)="onGenreSelected(genre.id)"
+    [class.active]="selectedGenreId === genre.id">
+    {{ genre.name | translate}}
+  </button>
+</div>
+
 
 
 
   <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-    @for (item of movieData; track $index) {
+    @for (item of filteredMovies; track $index) {
     <div *ngIf="!isLoading">
       <div class="relative cursor-pointer group" data-aos="zoom-out" data-aos-duration="500" data-aos-offset="150">
         <img [src]="imagePhath + item.poster_path" alt="Movie Poster"

@@ -1,7 +1,7 @@
 
 
 <div class="min-h-screen bg-[#0b132b] text-white px-6 py-6">
-  <h2 class="text-2xl font-bold mt-4 mb-6">My Favourites ❤️</h2>
+  <h2 class="text-2xl font-bold mt-4 mb-6">{{'My Favourites'| translate}} ❤️</h2>
 
   <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
     @for (item of wishlist; track item.id) {
@@ -34,12 +34,12 @@
 
   @if (wishlist.length === 0) {
     <p class="text-center mt-10 text-lg text-gray-300">
-      🚫 You haven't added any movies to your favourites yet. Start exploring!
+      🚫 {{"You haven't added any movies to your favourites yet. Start exploring" | translate}}!
     </p>
   }
 
 <div class="mt-20 relative">
-  <h2 class="text-2xl font-bold mb-4">Recommended for You 🎯</h2>
+  <h2 class="text-2xl font-bold mb-4">{{"Recommended for You" | translate}} 🎯</h2>
 
   <button
     (click)="scrollLeft()"
