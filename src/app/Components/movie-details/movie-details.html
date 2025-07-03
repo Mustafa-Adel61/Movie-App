@@ -1,13 +1,6 @@
 <main class="py-24 px-4 md:px-8 lg:px-16 xl:px-32 max-w-7xl mx-auto">
     <!-- Spinner أثناء التحميل -->
-    <div *ngIf="isLoading" class="flex flex-col items-center justify-center py-10">
-        <i class="fas fa-spinner fa-spin text-4xl mb-2"
-            [ngClass]="darkModeService.isDarkMode ? 'text-white' : 'text-brand-dark'"></i>
-        <p class="text-sm tracking-wide" [ngClass]="darkModeService.isDarkMode ? 'text-white' : 'text-brand-dark'">
-            Fetching Movie Details...
-        </p>
-    </div>
-
+    <app-Spinner *ngIf="isLoading" />
     <!-- Movie Card -->
     <div *ngIf="!isLoading && movie" class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         <!-- Poster -->

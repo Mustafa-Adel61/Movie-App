@@ -1,4 +1,6 @@
-import { Component, effect, OnInit } from '@angular/core';
+
+import { SpinnerComponent } from './../../shared/Spinner/Spinner.component';
+import { Component, effect, inject, OnInit, Signal, EventEmitter } from '@angular/core';
 import { DataFromAPI } from '../../data-from-api';
 import { CommonModule } from '@angular/common';
 import { IMovie } from '../../interfaces/imovie';
@@ -7,10 +9,13 @@ import { TranslateModule } from '@ngx-translate/core';
 import { WishlistCountService } from '../../services/wishlist-count-service';
 import { GenerService } from '../../services/gener-service';
 import { IGener } from '../../interfaces/igener';
+import { RouterModule } from '@angular/router';
+import { PaginationComponent } from '../../shared/Pagination/Pagination.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, TranslateModule],
+  imports: [CommonModule, TranslateModule, RouterModule, SpinnerComponent, PaginationComponent],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
@@ -19,19 +24,19 @@ export class Home implements OnInit {
   movieData: IMovie[] = [];
   filteredMovies: IMovie[] = [];
   wishlist: IMovie[] = [];
-  currentPage: number = 1;
-  totalPages: number = 0;
-  isLoading: boolean = false;
-  generList: IGener[] = [];
-  selectedGenreId: number | null = null;
 
-  constructor(
-    private _DataFromAPI: DataFromAPI,
-    public darkModeService: DarkModeServiceService,
-    private _wishlistCountService: WishlistCountService,
-    public _generService: GenerService
-  ) {
-    _wishlistCountService.GetWishlistCount();
+  currentPage = 1;
+  totalPages = 0;
+  isLoading = false;
+  searchQuery: string = '';
+  filteredMovies: IMovie[] = [];
+    generList: IGener[] = [];
+  selectedGenreId: number | null = null;
+  
+  constructor(private _DataFromAPI: DataFromAPI,
+    public darkModeService: DarkModeServiceService, private _wishlistCountService: WishlistCountService, public _generService: GenerService) {
+
+    _wishlistCountService.GetWishlistCount()
 
     effect(() => {
       const currentLang = _DataFromAPI.lang();
@@ -51,8 +56,16 @@ export class Home implements OnInit {
       this.wishlist = JSON.parse(saved);
     }
 
-    this.loadMovies();
-  }
+
+    constructor(private _DataFromAPI: DataFromAPI,
+      public darkModeService: DarkModeServiceService, private _wishlistCountService: WishlistCountService ) {
+
+        _wishlistCountService.GetWishlistCount()
+        effect(() => {
+          const currentLang = _DataFromAPI.lang();
+          this.loadMovies(1)
+        })
+
 
   fetchGenres() {
     this._generService.getGenres().subscribe({
@@ -88,20 +101,25 @@ export class Home implements OnInit {
           this.isLoading = false;
           console.error('Error fetching movies', err);
         }, 1000);
+
+        effect(() => {
+          const wishListCount = _wishlistCountService.wishlistCount();
+        })
+
       }
-    });
-  }
 
-  changePage(page: number): void {
-    if (page >= 1 && page <= this.totalPages) {
-      this.loadMovies(page);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      
+
+    ngOnInit(): void {
+      
+      const saved = localStorage.getItem('wishlist');
+    if (saved) {
+      this.wishlist = JSON.parse(saved);
     }
-  }
 
-  toggleDarkMode() {
-    this.darkModeService.toggleDarkMode();
-  }
+      this.loadMovies();
+    }
+
 
   toggleWishlist(movie: IMovie) {
     movie.inWishlist = !movie.inWishlist;
@@ -116,8 +134,17 @@ export class Home implements OnInit {
     this._wishlistCountService.GetWishlistCount();
   }
 
+
   onGenreSelected(genreId: number | null) {
     this.selectedGenreId = genreId;
+
+//////////////////////search
+onSearch(): void {
+  const query = this.searchQuery.toLowerCase().trim();
+  this.filteredMovies = this.movieData.filter(movie =>
+    (movie.title || movie.original_title || '').toLowerCase().includes(query)
+  );
+
 
     if (genreId === null) {
       this.filteredMovies = this.movieData;
@@ -128,3 +155,5 @@ export class Home implements OnInit {
     }
   }
 }
+
+  }
