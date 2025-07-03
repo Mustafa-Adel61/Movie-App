@@ -1,5 +1,8 @@
 
 <main class="py-32 max-w-7xl mx-auto">
+
+  <h1 class="text-3xl font-bold mb-6">{{ 'Movies' | translate }}</h1>
+
   <!-- Search-->
 <div class="mb-10 flex justify-center">
   <div class="w-full max-w-md relative">
@@ -27,61 +30,45 @@
 
 
 
+  <app-Spinner *ngIf="isLoading" />
 
-
+  <!-- Movie Cards -->
   <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
     @for (item of filteredMovies; track $index) {
     <div *ngIf="!isLoading">
-      <div class="relative cursor-pointer group" data-aos="zoom-out" data-aos-duration="500" data-aos-offset="150">
-        <img [src]="imagePhath + item.poster_path" alt="Movie Poster"
-          class="w-full h-64 object-cover rounded-xl shadow-md hover:-translate-1.5 transition-all ease-in duration-200" />
+      <!-- Card with RouterLink -->
 
-        <!-- Movie Info -->
+      <div class="relative cursor-pointer group" data-aos="zoom-out" data-aos-duration="500" data-aos-offset="150">
+        <a [routerLink]="['/details', item.id]">
+          <img [src]="imagePhath + item.poster_path" alt="Movie Poster"
+            class="w-full h-64 object-cover rounded-xl shadow-md hover:-translate-1.5 transition-all ease-in duration-200" />
+        </a>
         <div class="mt-2">
           <h3 class="text-sm font-semibold">{{ item.original_title || item.title }}</h3>
           <div class="flex items-center justify-between text-xs text-gray-300 dark:text-black">
-            <p [ngClass]="darkModeService.isDarkMode ? 'text-white' : 'text-black'">{{ item.release_date }}</p>
-            <button (click)="toggleWishlist(item)">
-            <i class="fa-heart  cursor-pointer transition-all"
-               [class.fa-solid]="item.inWishlist"
-               [class.fa-regular]="!item.inWishlist"
-               [class.text-red-500]="item.inWishlist"
-               [class.text-gray-400]="!item.inWishlist"
-               [class.hover\:text-yellow-400]="!item.inWishlist"
-               >
-            </i>
-         
+            <p [ngClass]="darkModeService.isDarkMode ? 'text-white' : 'text-black'">
+              {{ item.release_date }}</p>
+
+            <!-- Wishlist toggle -->
+            <button (click)="toggleWishlist(item); $event.preventDefault();">
+              <i class="fa-heart cursor-pointer transition-all" [class.fa-solid]="item.inWishlist"
+                [class.fa-regular]="!item.inWishlist" [class.text-red-500]="item.inWishlist"
+                [class.text-gray-400]="!item.inWishlist" [class.hover\:text-yellow-400]="!item.inWishlist">
+              </i>
             </button>
           </div>
         </div>
       </div>
-      </div>
-      } @empty {
-      <div class="font-bold text-4xl grid content-center justify-items-center w-screen">{{'No Movies here!'| translate}}</div>
-      }
+
     </div>
-
-
-
-  
-
-
-<div class="flex justify-center items-center gap-4 mt-20">
-    <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1"
-      class="px-4 py-2 rounded text-white hover:bg-[#3f3560] disabled:opacity-50"
-      [ngClass]="darkModeService.isDarkMode ? 'bg-[#3b2b70]' : 'bg-[#3b2b70]'">
-      {{'Previous'|translate}}
-    </button>
-
-    <span class="text-lg" [ngClass]="darkModeService.isDarkMode ? 'text-white ' : 'text-'">
-      Page {{ currentPage }} of {{ totalPages }}
-    </span>
-
-    <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages"
-      class="px-4 py-2 rounded text-white hover:bg-[#3f3560] disabled:opacity-50"
-      [ngClass]="darkModeService.isDarkMode ? 'bg-[#3b2b70]' : 'bg-[#3b2b70]'">
-      {{'Next' | translate}}
-    </button>
+    } @empty {
+    <div class="font-bold text-4xl grid content-center justify-items-center w-screen">
+      {{ 'No Movies here!' | translate }}
+    </div>
+    }
   </div>
 
+  <!-- Pagination -->
+  <app-Pagination [currentPage]="currentPage" [totalPages]="totalPages" (pageChange)="changePage($event)">
+  </app-Pagination>
 </main>

@@ -1,0 +1,55 @@
+<main class="py-24 px-4 md:px-8 lg:px-16 xl:px-32 max-w-7xl mx-auto">
+    <!-- Spinner أثناء التحميل -->
+    <app-Spinner *ngIf="isLoading" />
+    <!-- Movie Card -->
+    <div *ngIf="!isLoading && movie" class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <!-- Poster -->
+        <div>
+            <img [src]="imagePath + movie.poster_path" alt="Movie Poster" class="w-full rounded-lg shadow-md" />
+        </div>
+
+        <!-- Details -->
+        <div>
+            <h1 class="text-3xl font-bold mb-4"
+                [ngClass]="darkModeService.isDarkMode ? 'text-white' : 'text-brand-dark'">
+                {{ movie.original_title || movie.title }}
+            </h1>
+
+            <p class="text-sm mb-2" [ngClass]="darkModeService.isDarkMode ? 'text-gray-300' : 'text-gray-700'">
+                <strong>Release Date:</strong> {{ movie.release_date }}
+            </p>
+
+            <p class="text-sm mb-2" [ngClass]="darkModeService.isDarkMode ? 'text-gray-300' : 'text-gray-700'">
+                <strong>{{ 'Rating:' | translate }}</strong> {{ movie.vote_average }} / 10
+            </p>
+
+            <p class="text-base leading-relaxed mb-4"
+                [ngClass]="darkModeService.isDarkMode ? 'text-gray-200' : 'text-gray-800'">
+                {{ movie.overview }}
+            </p>
+
+            <!-- Wishlist Button -->
+            <button (click)="toggleWishlist(movie); $event.preventDefault();"
+                class="flex items-center gap-2 px-4 py-2 rounded-md bg-red-600 text-white hover:bg-red-700 transition-all">
+                <i class="fa-heart" [class.fa-solid]="movie.inWishlist" [class.fa-regular]="!movie.inWishlist"></i>
+                {{ movie.inWishlist ? ('Remove from Wishlist' | translate) : ('Add to Wishlist' | translate) }}
+            </button>
+        </div>
+    </div>
+
+
+    <!-- Trailer Section -->
+
+    <div *ngIf="trailerUrl" class="mt-10">
+        <h2 class="text-xl font-semibold mb-4"
+            [ngClass]="darkModeService.isDarkMode ? 'text-white' : 'text-brand-dark'">
+            Official Trailer
+        </h2>
+        <div class="w-full relative pb-[56.25%] h-0 overflow-hidden rounded-lg shadow-lg">
+            <iframe [src]="trailerUrl" class="absolute top-0 left-0 w-full h-full" frameborder="0" allowfullscreen>
+            </iframe>
+        </div>
+    </div>
+
+
+</main>

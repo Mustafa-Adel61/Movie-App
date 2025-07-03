@@ -1,0 +1,18 @@
+<!-- Pagination -->
+<div class="flex justify-center items-center gap-4 mt-20">
+  <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1"
+    class="px-4 py-2 rounded text-white hover:bg-[#3f3560] disabled:opacity-50"
+    [ngClass]="darkModeService.isDarkMode ? 'bg-[#3b2b70]' : 'bg-[#3b2b70]'">
+    {{ 'Previous' | translate }}
+  </button>
+
+  <span class="text-lg" [ngClass]="darkModeService.isDarkMode ? 'text-white ' : 'text-[#201640]'">
+    Page {{ currentPage }} of {{ totalPages }}
+  </span>
+
+  <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages"
+    class="px-4 py-2 rounded text-white hover:bg-[#3f3560] disabled:opacity-50"
+    [ngClass]="darkModeService.isDarkMode ? 'bg-[#3b2b70]' : 'bg-[#3b2b70]'">
+    {{ 'Next' | translate }}
+  </button>
+</div>
