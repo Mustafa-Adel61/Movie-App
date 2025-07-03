@@ -1,6 +1,7 @@
 <main class="py-24 px-4 md:px-8 lg:px-16 xl:px-32 max-w-7xl mx-auto">
     <!-- Spinner أثناء التحميل -->
     <app-Spinner *ngIf="isLoading" />
+    
     <!-- Movie Card -->
     <div *ngIf="!isLoading && movie" class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         <!-- Poster -->

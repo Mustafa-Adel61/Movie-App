@@ -1,66 +1,47 @@
-
 <main class="py-32 max-w-7xl mx-auto">
-
-  <h1 class="text-3xl font-bold mb-6">{{ 'Movies' | translate }}</h1>
-
   <!-- Search-->
-<div class="mb-10 flex justify-center">
-  <div class="w-full max-w-md relative">
-    <input
-      type="text"
-      [(ngModel)]="searchQuery"
-      (input)="onSearch()"
-      placeholder="{{ 'Search movies...' | translate }}"
-      class="w-full px-5 py-3 rounded-xl shadow-md border focus:outline-none transition-all duration-200"
-      [ngClass]="darkModeService.isDarkMode 
+  <div class="mb-10 flex justify-center">
+    <div class="w-full max-w-md relative">
+      <input type="text" [(ngModel)]="searchQuery" (input)="onSearch()"
+        placeholder="{{ 'Search movies...' | translate }}"
+        class="w-full px-5 py-3 rounded-xl shadow-md border focus:outline-none transition-all duration-200" [ngClass]="darkModeService.isDarkMode 
         ? 'bg-[#2d2455] text-white placeholder-gray-300 border-gray-600 focus:ring-2 focus:ring-[#6b5ca1]'
-        : 'bg-white text-black placeholder-gray-500 border-gray-300 focus:ring-2 focus:ring-[#3b2b70]'"
-    />
-    <i class="fas fa-search absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
-       [ngClass]="darkModeService.isDarkMode ? 'text-white' : 'text-[#3b2b70]'"></i>
+        : 'bg-white text-black placeholder-gray-500 border-gray-300 focus:ring-2 focus:ring-[#3b2b70]'" />
+      <i class="fas fa-search absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
+        [ngClass]="darkModeService.isDarkMode ? 'text-white' : 'text-[#3b2b70]'"></i>
+    </div>
   </div>
-</div>
-  <h1 class="text-3xl font-bold mb-6">{{'Movies' | translate}}</h1>
-  <!-- Spinner أثناء التحميل -->
-  <div *ngIf="isLoading" class="flex flex-col items-center justify-center py-10">
-    <i class="fas fa-spinner fa-spin  text-4xl mb-2"
-      [ngClass]="darkModeService.isDarkMode ? ' text-white' : 'text-[#201640]'"></i>
-    <p class="text-sm tracking-wide" [ngClass]="darkModeService.isDarkMode ? ' text-white' : 'text-[#201640]'">{{'Fetching Movies...' | translate}}</p>
-  </div>
-
-
 
   <app-Spinner *ngIf="isLoading" />
 
 
-<div class="genres-filter">
-  <button
-    (click)="onGenreSelected(null)"
-    [class.active]="selectedGenreId === null">
-    {{'All Genres' | translate}}
-  </button>
+  <div class="genres-filter">
+    <button (click)="onGenreSelected(null)" [class.active]="selectedGenreId === null">
+      {{'All Genres' | translate}}
+    </button>
 
-  <button
-    *ngFor="let genre of generList"
-    (click)="onGenreSelected(genre.id)"
-    [class.active]="selectedGenreId === genre.id">
-    {{ genre.name | translate}}
-  </button>
-</div>
+    <button *ngFor="let genre of generList" (click)="onGenreSelected(genre.id)"
+      [class.active]="selectedGenreId === genre.id">
+      {{ genre.name | translate}}
+    </button>
+  </div>
 
 
 
+  <h1 class="text-3xl font-bold my-6">{{ 'Movies' | translate }}</h1>
 
   <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+
     @for (item of filteredMovies; track $index) {
     <div *ngIf="!isLoading">
       <!-- Card with RouterLink -->
 
       <div class="relative cursor-pointer group" data-aos="zoom-out" data-aos-duration="500" data-aos-offset="150">
-        <a routerLink="['/details', item.id]">
+        <a [routerLink]="['/details', item.id]">
           <img [src]="imagePhath + item.poster_path" alt="Movie Poster"
             class="w-full h-64 object-cover rounded-xl shadow-md hover:-translate-1.5 transition-all ease-in duration-200" />
         </a>
+
         <div class="mt-2">
           <h3 class="text-sm font-semibold">{{ item.original_title || item.title }}</h3>
           <div class="flex items-center justify-between text-xs text-gray-300 dark:text-black">
@@ -69,7 +50,7 @@
 
             <!-- Wishlist toggle -->
             <button (click)="toggleWishlist(item); $event.preventDefault();">
-              <i class="fa-heart cursor-pointer transition-all" [class.fa-solid]="item.inWishlist"
+              <i class="fa-heart cursor-pointer transition-all hover:text-red-600" [class.fa-solid]="item.inWishlist"
                 [class.fa-regular]="!item.inWishlist" [class.text-red-500]="item.inWishlist"
                 [class.text-gray-400]="!item.inWishlist" [class.hover\:text-yellow-400]="!item.inWishlist">
               </i>
