@@ -92,9 +92,7 @@
           <a routerLink="/userAccount" (click)="isUserImageClicked = false" class="block px-4 py-2 text-sm "
             [ngClass]="isDarkMode ? 'text-white hover:bg-[#050b1f]' : 'text-black hover:text-white hover:bg-[#201640]'">
             {{'Your Profile'|translate}}</a>
-          <a href="#" class="block px-4 py-2 text-sm"
-            [ngClass]="isDarkMode ? 'text-white hover:bg-[#050b1f]' : 'text-black hover:text-white hover:bg-[#201640]'">{{'Settings'|translate}}</a>
-
+          
           <button (click)="logout()" type="button"
             class="w-full text-left px-4 py-2 text-sm bg-transparent hover:bg-red-600 rounded-md"
             [ngClass]="isDarkMode ? 'text-white' : 'text-black hover:text-white'">
