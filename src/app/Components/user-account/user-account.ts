@@ -55,6 +55,7 @@ export class UserAccount {
 
     if (!newFirstName && !newLastName && !newPassword) {
       alert('No information changed');
+      this.isEditProfileBtnClicked = false
       return;
     }
 
