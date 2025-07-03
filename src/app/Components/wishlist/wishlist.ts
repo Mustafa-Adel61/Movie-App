@@ -5,13 +5,14 @@ import { DarkModeServiceService } from '../../services/DarkModeService.service';
 import { CommonModule } from '@angular/common';
 import { WishlistCountService } from '../../services/wishlist-count-service';
 import { TranslateModule } from '@ngx-translate/core';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-wishlist',
   templateUrl: './wishlist.html',
   styleUrl: './wishlist.css',
-    imports: [CommonModule, TranslateModule],
-  
+  imports: [CommonModule, TranslateModule, RouterModule],
+
 })
 export class Wishlist implements OnInit {
 
