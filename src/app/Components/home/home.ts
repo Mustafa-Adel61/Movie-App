@@ -1,4 +1,5 @@
-import { Component, effect, inject, OnInit, Signal, signal } from '@angular/core';
+import { SpinnerComponent } from './../../shared/Spinner/Spinner.component';
+import { Component, effect, inject, OnInit, Signal, EventEmitter } from '@angular/core';
 import { DataFromAPI } from '../../data-from-api';
 import { CommonModule } from '@angular/common';
 import { IMovie } from '../../interfaces/imovie';
@@ -6,10 +7,12 @@ import { DarkModeServiceService } from '../../services/DarkModeService.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { WishlistCountService } from '../../services/wishlist-count-service';
 import { RouterModule } from '@angular/router';
+import { PaginationComponent } from '../../shared/Pagination/Pagination.component';
+
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, TranslateModule, RouterModule],
+  imports: [CommonModule, TranslateModule, RouterModule, SpinnerComponent, PaginationComponent],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
@@ -17,12 +20,9 @@ export class Home implements OnInit {
   imagePhath: string = 'https://image.tmdb.org/t/p/w500';
   movieData: IMovie[] = [];
   wishlist: IMovie[] = [];
-  currentPage: number = 1;
-  totalPages: number = 0;
-  isLoading: boolean = false;
-
-
-
+  currentPage = 1;
+  totalPages = 0;
+  isLoading = false;
 
   constructor(private _DataFromAPI: DataFromAPI,
     public darkModeService: DarkModeServiceService, private _wishlistCountService: WishlistCountService) {
@@ -60,9 +60,7 @@ export class Home implements OnInit {
           inWishlist: this.wishlist.some(m => m.id === movie.id),
           isFavorite: false
         }));
-        // this.totalPages = res.total_pages;
-        // this.currentPage = res.page;
-        // this.isLoading = false;
+
         setTimeout(() => {
           this.movieData = processedData;
           this.totalPages = res.total_pages;
@@ -104,8 +102,6 @@ export class Home implements OnInit {
     this._wishlistCountService.GetWishlistCount()
 
   }
-
-
 }
 
 

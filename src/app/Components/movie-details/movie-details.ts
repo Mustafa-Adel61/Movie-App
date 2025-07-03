@@ -7,11 +7,12 @@ import { DataFromAPI } from '../../data-from-api';
 import { WishlistCountService } from '../../services/wishlist-count-service';
 import { TranslateModule } from '@ngx-translate/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { SpinnerComponent } from '../../shared/Spinner/Spinner.component';
 
 @Component({
   selector: 'app-movie-details',
   standalone: true,
-  imports: [CommonModule, TranslateModule],
+  imports: [CommonModule, TranslateModule, SpinnerComponent],
   templateUrl: './movie-details.html',
   styleUrl: './movie-details.css'
 })

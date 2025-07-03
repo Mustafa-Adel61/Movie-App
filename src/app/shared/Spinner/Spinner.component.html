@@ -1,0 +1,8 @@
+<!-- Spinner -->
+<div class="flex flex-col items-center justify-center py-10">
+  <i class="fas fa-spinner fa-spin text-4xl mb-2"
+    [ngClass]="darkModeService.isDarkMode ? 'text-white' : 'text-[#201640]'"></i>
+  <p class="text-sm tracking-wide" [ngClass]="darkModeService.isDarkMode ? 'text-white' : 'text-[#201640]'">{{
+    'Fetching Movies...' | translate }}
+  </p>
+</div>
