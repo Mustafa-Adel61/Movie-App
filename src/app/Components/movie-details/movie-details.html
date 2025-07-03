@@ -13,20 +13,20 @@
         <div>
             <h1 class="text-3xl font-bold mb-4"
                 [ngClass]="darkModeService.isDarkMode ? 'text-white' : 'text-brand-dark'">
-                {{ movie.original_title || movie.title }}
+                {{ movie.original_title | translate }}
             </h1>
 
             <p class="text-sm mb-2" [ngClass]="darkModeService.isDarkMode ? 'text-gray-300' : 'text-gray-700'">
-                <strong>Release Date:</strong> {{ movie.release_date }}
+                <strong>{{'Release Date:' | translate}}</strong> {{ movie.release_date | translate}}
             </p>
 
             <p class="text-sm mb-2" [ngClass]="darkModeService.isDarkMode ? 'text-gray-300' : 'text-gray-700'">
-                <strong>{{ 'Rating:' | translate }}</strong> {{ movie.vote_average }} / 10
+                <strong>{{ 'Rating' | translate }}</strong> {{ movie.vote_average }} / 10
             </p>
 
             <p class="text-base leading-relaxed mb-4"
                 [ngClass]="darkModeService.isDarkMode ? 'text-gray-200' : 'text-gray-800'">
-                {{ movie.overview }}
+                {{ movie.overview | translate}}
             </p>
 
             <!-- Wishlist Button -->
