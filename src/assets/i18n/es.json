@@ -46,5 +46,15 @@
   "All Genres": "Todos los géneros",
   "My Favourites": "Mis favoritos",
   "You haven't added any movies to your favourites yet. Start exploring": "Aún no has agregado ninguna película a tus favoritos. Comienza a explorar",
-  "Recommended for You": "Recomendado para ti"
+  "Recommended for You": "Recomendado para ti",
+  "Search movies...": "Buscar películas...",
+  "Release Date:": "Date de sortie :",
+  "Rating": "Calificación",
+  "Add to Wishlist": "Agregar a la lista de deseos",
+  "Remove from Wishlist": "Eliminar de la lista de deseos",
+  "Edit Profile": "Editar perfil",
+  "Edit First Name": "Editar nombre",
+  "Edit Last Name": "Editar apellido",
+  "Edit Password": "Editar contraseña",
+  "Save": "Guardar"
 }

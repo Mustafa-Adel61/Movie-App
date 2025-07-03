@@ -46,5 +46,18 @@
   "All Genres": "كل الأنواع",
   "My Favourites": "مفضلاتي",
   "You haven't added any movies to your favourites yet. Start exploring":"لم تقم بإضافة أي أفلام إلى المفضلة بعد. ابدأ في الاستكشاف",
-  "Recommended for You":"موصى به"
+  "Recommended for You":"موصى به",
+  "Search movies...": "البحث عن افلام",
+  "Release Date:": "تاريخ النشر",
+  "Rating": "التقييم",
+  "Add to Wishlist": "أضف إلى المفضلة",
+  "Remove from Wishlist": "إزالة من المفضلة",
+  "Edit Profile": "تعديل الملف الشخصي",
+  "Edit First Name": "تعديل الاسم الأول",
+  "Edit Last Name":"تعديل اسم العائلة",
+  "Edit Password":"تعديل كلمة المرور",
+  "Save": "حفظ"
+
+
+
 }
